@@ -6,7 +6,7 @@
  * Chromium over it.
  */
 import { createServer } from 'node:http';
-import { readFile, stat, mkdir } from 'node:fs/promises';
+import { readFile, stat, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -102,6 +102,16 @@ async function main() {
     await page.goto(`${origin}${BASE}/?theme=light`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: 'print' });
+
+    // Capture the copy that is marked screen-only so the PDF check can assert
+    // none of it leaked into the printed file.
+    const screenOnly = await page.$$eval('[data-screen-only]', (nodes) =>
+      nodes.map((node) => node.textContent?.trim() ?? '').filter(Boolean),
+    );
+    await writeFile(
+      path.join(ROOT, '.pdf-check.json'),
+      JSON.stringify({ screenOnly }, null, 2),
+    );
 
     await page.pdf({
       path: path.join(DIST, 'cv.pdf'),

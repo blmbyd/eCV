@@ -27,7 +27,13 @@ import { profile, featuredRoles, parallelRoles } from '../lib/cv';
           <SectionHeading id="about-title" title="About" eyebrow="Who you are hiring" />
           <div class="about">
             <div class="prose">
-              {profile.summary.map((paragraph) => <p>{paragraph}</p>)}
+              {
+                profile.summary.map((paragraph) => (
+                  <p data-screen-only={paragraph.screenOnly ? 'true' : undefined}>
+                    {paragraph.text}
+                  </p>
+                ))
+              }
             </div>
           </div>
         </div>

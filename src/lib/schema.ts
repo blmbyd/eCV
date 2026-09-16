@@ -28,6 +28,24 @@ const linkSchema = z.object({
   icon: z.enum(['linkedin', 'github', 'globe', 'mail']),
 });
 
+/**
+ * A line of copy that can be kept on the web page but left out of the printed
+ * CV and the generated PDF.
+ *
+ * Plain string  -> shown everywhere.
+ * { text: ... } -> shown on the page only, unless `screenOnly: false`.
+ */
+const copy = z
+  .union([
+    z.string(),
+    z.object({ text: z.string(), screenOnly: z.boolean().default(true) }),
+  ])
+  .transform((value) =>
+    typeof value === 'string' ? { text: value, screenOnly: false } : value,
+  );
+
+export type Copy = { text: string; screenOnly: boolean };
+
 export const profileSchema = z.object({
   name: z.string(),
   shortName: z.string(),
@@ -45,7 +63,7 @@ export const profileSchema = z.object({
   careerStart: yearMonth,
   independentSince: yearMonth,
   links: z.array(linkSchema).min(1),
-  summary: z.array(z.string()).min(1),
+  summary: z.array(copy).min(1),
   personalNote: z.string(),
 });
 
@@ -70,7 +88,14 @@ export const roleSchema = z.object({
   featured: z.boolean(),
   summary: z.string().optional(),
   groups: z
-    .array(z.object({ label: z.string(), items: z.array(z.string()).min(1) }))
+    .array(
+      z.object({
+        label: z.string(),
+        /** Hide the whole group, heading included, from print. */
+        screenOnly: z.boolean().default(false),
+        items: z.array(copy).min(1),
+      }),
+    )
     .optional(),
   tech: z.array(techGroupSchema).optional(),
 });
