@@ -79,15 +79,6 @@ export const experienceSchema = z.object({ roles: z.array(roleSchema).min(1) });
 
 export const skillsSchema = z.object({
   top: z.array(z.string()).min(1),
-  groups: z
-    .array(
-      z.object({
-        label: z.string(),
-        note: z.string().optional(),
-        items: z.array(z.string()).min(1),
-      }),
-    )
-    .min(1),
 });
 
 export const certificationsSchema = z.object({

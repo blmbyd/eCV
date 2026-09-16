@@ -134,9 +134,13 @@ import { contributionGroups, formatContributionDate, linkHost } from '../lib/cv'
   }
 
   @media print {
+    .summary {
+      line-height: 1.28;
+    }
+
     .community {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10pt 14pt;
+      gap: 8pt 14pt;
     }
 
     .group {
@@ -153,8 +157,8 @@ import { contributionGroups, formatContributionDate, linkHost } from '../lib/cv'
     }
 
     ul {
-      margin-block-start: 5pt;
-      gap: 5pt;
+      margin-block-start: 4pt;
+      gap: 4pt;
     }
 
     .item {

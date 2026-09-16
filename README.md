@@ -18,7 +18,7 @@ with a readable message instead of shipping a broken page.
 ```
 src/data/profile.yaml          name, location, summary, links
 src/data/experience.yaml       every role, its highlights and its tech stack
-src/data/skills.yaml           grouped skills plus the three "top skills"
+src/data/skills.yaml             the three "top skills" shown in the hero
 src/data/certifications.yaml   certifications by issuer, plus courses
 src/data/education.yaml        degrees and languages
 src/data/community.yaml        talks, podcasts, writing and open source
