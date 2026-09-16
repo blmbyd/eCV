@@ -1,0 +1,73 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+}
+
+const { id, title, eyebrow, lead } = Astro.props;
+---
+
+<header class="heading">
+  <div class="line">
+    {/* A painted trail blaze, the kind you follow through a forest. */}
+    <span class="blaze" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </span>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  </div>
+  <h2 id={id}>{title}</h2>
+  {lead && <p class="lead">{lead}</p>}
+</header>
+
+<style>
+  .heading {
+    margin-block-end: var(--space-l);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+
+  .blaze {
+    display: grid;
+    gap: 2px;
+    width: 12px;
+    flex: none;
+  }
+
+  .blaze span {
+    display: block;
+    height: 4px;
+    border-radius: 1px;
+    background: var(--accent);
+  }
+
+  .blaze span:nth-child(2) {
+    background: var(--amber);
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  .lead {
+    max-width: var(--measure);
+    color: var(--text-muted);
+  }
+
+  @media print {
+    .heading {
+      margin-block-end: 8pt;
+    }
+
+    .blaze span {
+      background: #333 !important;
+    }
+  }
+</style>

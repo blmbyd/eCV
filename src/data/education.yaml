@@ -1,0 +1,21 @@
+education:
+  - id: utp-bydgoszcz
+    qualification: Master of Science (MSc)
+    field: Telecommunications & Electrical Engineering
+    specialisation: Computer Communications
+    institution: University of Technology and Life Sciences in Bydgoszcz
+    institutionNote: now Bydgoszcz University of Science and Technology
+    location: Bydgoszcz, Poland
+    start: 2003-09
+    end: 2008-12
+    subjects:
+      - Telecommunication and computer systems and networks
+      - Computer programming
+
+languages:
+  - name: Polish
+    level: Native
+    cefr: null
+  - name: English
+    level: Professional working proficiency
+    cefr: C1

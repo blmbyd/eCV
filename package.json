@@ -1,0 +1,29 @@
+{
+  "name": "ecv",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public CV of Pawel Stuczynski, published to GitHub Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pdf": "node scripts/generate-pdf.mjs",
+    "build:full": "astro build && node scripts/generate-pdf.mjs",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/inter": "^5.2.5",
+    "@fontsource-variable/jetbrains-mono": "^5.2.5",
+    "@fontsource-variable/outfit": "^5.2.5",
+    "astro": "^5.16.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@rollup/plugin-yaml": "^4.1.2",
+    "playwright": "^1.50.0",
+    "typescript": "^5.7.0"
+  }
+}

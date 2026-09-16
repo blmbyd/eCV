@@ -1,0 +1,106 @@
+---
+import Icon from './Icon.astro';
+import { profile, buildDate } from '../lib/cv';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const updated = buildDate.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="inner">
+      <div class="left">
+        <p class="name">{profile.name}</p>
+        <p class="note">
+          Built with Astro, published with GitHub Pages. Last updated {updated}.
+        </p>
+      </div>
+
+      <ul class="links">
+        <li>
+          <a href={`mailto:${profile.email}`}>
+            <Icon name="mail" size={16} />
+            {profile.email}
+          </a>
+        </li>
+        {
+          profile.links.map((link) => (
+            <li>
+              <a href={link.url} rel="me noopener">
+                <Icon name={link.icon} size={16} />
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={`${base}/cv.pdf`} download>
+            <Icon name="download" size={16} />
+            PDF version
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-block-start: var(--space-xl);
+    padding-block: var(--space-m) var(--space-l);
+    border-block-start: 1px solid var(--border);
+    background: var(--bg-sunken);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-m);
+    align-items: center;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .note {
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+  }
+
+  .links a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--accent);
+  }
+
+  @media print {
+    .footer {
+      margin-block-start: 10pt;
+      padding-block: 6pt 0;
+      background: none;
+    }
+
+    .links a[href$='cv.pdf'] {
+      display: none;
+    }
+  }
+</style>

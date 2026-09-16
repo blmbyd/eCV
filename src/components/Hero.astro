@@ -1,0 +1,356 @@
+---
+import Icon from './Icon.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { profile, skills } from '../lib/cv';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const portrait = profile.portrait ? `${base}/${profile.portrait}` : null;
+const locationLabel = `${profile.location.city}, ${profile.location.country}`;
+---
+
+<header class="hero">
+  <div class="wrap">
+    <div class="bar">
+      <p class="eyebrow">Curriculum vitae</p>
+      <div class="bar-actions">
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="intro">
+        <p class="available">
+          <span class="dot" aria-hidden="true"></span>
+          {profile.availability}
+        </p>
+
+        <h1>{profile.name}</h1>
+
+        <p class="roles">
+          {
+            profile.roles.map((role, index) => (
+              <span class="role">
+                {index > 0 && (
+                  <span class="sep" aria-hidden="true">
+                    /
+                  </span>
+                )}
+                {role}
+              </span>
+            ))
+          }
+        </p>
+
+        <p class="tagline">{profile.tagline}</p>
+
+        <ul class="contact">
+          <li>
+            <Icon name="pin" size={16} />
+            <span>{locationLabel}</span>
+          </li>
+          <li>
+            <Icon name="mail" size={16} />
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          </li>
+          {
+            profile.links.map((link) => (
+              <li>
+                <Icon name={link.icon} size={16} />
+                <a href={link.url} rel="me noopener">
+                  {link.handle}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="actions">
+          <a class="button primary" href={`${base}/cv.pdf`} download>
+            <Icon name="download" size={17} />
+            Download PDF
+          </a>
+          <button class="button" type="button" data-print>
+            <Icon name="printer" size={17} />
+            Print this page
+          </button>
+        </div>
+      </div>
+
+      <div class="aside">
+        <figure class="portrait">
+          {
+            portrait ? (
+              <img
+                src={portrait}
+                alt={`Portrait of ${profile.name}`}
+                width="360"
+                height="360"
+                loading="eager"
+              />
+            ) : (
+              <span class="monogram" aria-hidden="true">
+                {profile.initials}
+              </span>
+            )
+          }
+        </figure>
+
+        <div class="top-skills">
+          <p class="eyebrow">Top skills</p>
+          <ul>
+            {skills.top.map((skill) => <li>{skill}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  document
+    .querySelector<HTMLButtonElement>('[data-print]')
+    ?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .hero {
+    padding-block: var(--space-l) var(--space-xl);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-block-end: var(--space-l);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-l);
+    align-items: start;
+  }
+
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      gap: var(--space-xl);
+    }
+  }
+
+  .available {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: 0.3em 0.9em 0.3em 0.7em;
+    margin-block-end: var(--space-s);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+    border-radius: var(--radius-pill);
+    background: var(--accent-wash);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-wash);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .roles {
+    margin-block-start: var(--space-2xs);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1.3;
+  }
+
+  .sep {
+    margin-inline-end: 0.35em;
+    color: var(--text-subtle);
+  }
+
+  .tagline {
+    margin-block-start: var(--space-m);
+    max-width: 46ch;
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+
+  .contact {
+    margin-block-start: var(--space-m);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .contact li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xs);
+  }
+
+  .contact :global(svg) {
+    color: var(--text-subtle);
+    flex: none;
+  }
+
+  .contact a {
+    color: inherit;
+    text-decoration: none;
+    border-block-end: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .contact a:hover {
+    color: var(--accent);
+  }
+
+  .actions {
+    margin-block-start: var(--space-m);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    padding: 0.6em 1.1em;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--bg-raised);
+    color: var(--text);
+    font: inherit;
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 150ms var(--ease), border-color 150ms var(--ease);
+  }
+
+  .button:hover {
+    color: var(--text);
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+
+  .button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .button.primary:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: var(--accent-ink);
+  }
+
+  .aside {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .portrait {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 15rem;
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(
+        120% 120% at 30% 0%,
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        transparent 62%
+      ),
+      var(--bg-raised);
+    display: grid;
+    place-items: center;
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .monogram {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+
+  .top-skills ul {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .top-skills li {
+    padding-inline-start: var(--space-s);
+    position: relative;
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .top-skills li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.62em;
+    width: 8px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--amber);
+  }
+
+  @media print {
+    .hero {
+      padding-block: 0 10pt;
+    }
+
+    .bar,
+    .actions,
+    .available,
+    .portrait {
+      display: none !important;
+    }
+
+    .grid {
+      display: block;
+    }
+
+    .tagline {
+      margin-block-start: 6pt;
+      max-width: none;
+    }
+
+    .contact {
+      margin-block-start: 6pt;
+      gap: 2pt 12pt;
+    }
+
+    .top-skills {
+      display: none;
+    }
+  }
+</style>

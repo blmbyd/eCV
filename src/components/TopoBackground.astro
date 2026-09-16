@@ -1,0 +1,108 @@
+---
+/**
+ * Decorative topographic contour lines.
+ *
+ * Rings are generated deterministically at build time from a few summed sine
+ * waves, so they look hand-drawn rather than like concentric circles, and they
+ * are identical on every build.
+ */
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+const round = (value: number) => Math.round(value * 10) / 10;
+
+function closedSmoothPath(points: Point[]): string {
+  const count = points.length;
+  const at = (index: number) => points[(index + count) % count]!;
+  let d = `M${round(at(0).x)},${round(at(0).y)}`;
+
+  for (let i = 0; i < count; i += 1) {
+    const p0 = at(i - 1);
+    const p1 = at(i);
+    const p2 = at(i + 1);
+    const p3 = at(i + 2);
+    const c1x = round(p1.x + (p2.x - p0.x) / 6);
+    const c1y = round(p1.y + (p2.y - p0.y) / 6);
+    const c2x = round(p2.x - (p3.x - p1.x) / 6);
+    const c2y = round(p2.y - (p3.y - p1.y) / 6);
+    d += ` C${c1x},${c1y} ${c2x},${c2y} ${round(p2.x)},${round(p2.y)}`;
+  }
+
+  return `${d}Z`;
+}
+
+function contour(cx: number, cy: number, radius: number, seed: number): string {
+  const samples = 44;
+  const points: Point[] = [];
+
+  for (let i = 0; i < samples; i += 1) {
+    const angle = (i / samples) * Math.PI * 2;
+    const wobble =
+      Math.sin(angle * 3 + seed) * 0.11 +
+      Math.sin(angle * 5 - seed * 1.7) * 0.06 +
+      Math.sin(angle * 2 + seed * 0.6) * 0.09;
+    const r = radius * (1 + wobble);
+    points.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r * 0.74 });
+  }
+
+  return closedSmoothPath(points);
+}
+
+/** Each hill is a nest of rings sharing a centre and a wobble seed. */
+const hills = [
+  { cx: 210, cy: 250, seed: 1.1, rings: 8, base: 34, step: 27 },
+  { cx: 690, cy: 620, seed: 4.3, rings: 9, base: 30, step: 31 },
+  { cx: 760, cy: 160, seed: 2.6, rings: 5, base: 28, step: 24 },
+  { cx: 330, cy: 760, seed: 5.8, rings: 5, base: 26, step: 22 },
+];
+
+const paths = hills.flatMap((hill) =>
+  Array.from({ length: hill.rings }, (_, index) =>
+    contour(hill.cx, hill.cy, hill.base + index * hill.step, hill.seed + index * 0.22),
+  ),
+);
+---
+
+<div class="topo" aria-hidden="true">
+  <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern
+        id="topo-tile"
+        patternUnits="userSpaceOnUse"
+        width="900"
+        height="900"
+        patternTransform="rotate(-8)"
+      >
+        {paths.map((d) => <path d={d} />)}
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#topo-tile)"></rect>
+  </svg>
+</div>
+
+<style>
+  .topo {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Fade the texture out toward the bottom so content stays the focus. */
+    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0, 0, 0, 0.35) 100%);
+  }
+
+  .topo path {
+    fill: none;
+    stroke: var(--topo);
+    stroke-width: 1.15;
+  }
+
+  @media print {
+    .topo {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { earlierRoles, formatRange } from '../lib/cv';
+---
+
+<section class="earlier">
+  <h3 class="eyebrow">Earlier roles</h3>
+  <ul>
+    {
+      earlierRoles.map((role) => (
+        <li>
+          <span class="range mono">{formatRange(role.start, role.end)}</span>
+          <span class="title">{role.title}</span>
+          <span class="org">
+            {role.org}
+            <span class="dot" aria-hidden="true">
+              ·
+            </span>
+            {role.location}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="note">
+    The bench work before the keyboard work. Three years as a toolmaker still shapes how
+    I approach a problem.
+  </p>
+</section>
+
+<style>
+  .earlier {
+    margin-block-start: var(--space-l);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--border);
+  }
+
+  ul {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  li {
+    display: grid;
+    gap: 0 var(--space-m);
+    font-size: var(--step--1);
+  }
+
+  @media (min-width: 52rem) {
+    li {
+      grid-template-columns: 11rem minmax(0, 14rem) minmax(0, 1fr);
+      align-items: baseline;
+      gap: var(--space-2xs) var(--space-m);
+    }
+  }
+
+  .range {
+    color: var(--text-subtle);
+  }
+
+  .title {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .org {
+    color: var(--text-muted);
+  }
+
+  .dot {
+    margin-inline: 0.35em;
+    color: var(--text-subtle);
+  }
+
+  .note {
+    margin-block-start: var(--space-s);
+    max-width: var(--measure);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+
+  @media print {
+    .earlier {
+      margin-block-start: 6pt;
+      padding-block-start: 5pt;
+    }
+
+    ul {
+      gap: 1.5pt;
+    }
+
+    li {
+      grid-template-columns: 74pt 110pt minmax(0, 1fr);
+      gap: 0 9pt;
+    }
+
+    .note {
+      margin-block-start: 5pt;
+    }
+  }
+</style>
