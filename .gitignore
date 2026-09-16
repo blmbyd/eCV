@@ -10,6 +10,7 @@ node_modules/
 
 # generated
 *.pdf.tmp
+.pdf-check.json
 
 # logs
 npm-debug.log*

@@ -37,11 +37,11 @@ const isCurrent = role.end === null;
 
     {
       role.groups?.map((group) => (
-        <section class="group">
+        <section class="group" data-screen-only={group.screenOnly ? 'true' : undefined}>
           <h4>{group.label}</h4>
           <ul>
             {group.items.map((item) => (
-              <li>{item}</li>
+              <li data-screen-only={item.screenOnly ? 'true' : undefined}>{item.text}</li>
             ))}
           </ul>
         </section>

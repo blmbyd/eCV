@@ -30,10 +30,11 @@ roles:
             architectures.
           - Deliver executive briefings, technical workshops, proofs of concept and live
             product demonstrations.
-          - Partner with account teams to define adoption strategies and technical
-            roadmaps.
+          - text: Partner with account teams to define adoption strategies and technical
+              roadmaps.
           - Support customers all the way through evaluation, implementation and
             adoption — not just to signature.
+          - Lead cross-functional delivery teams through strategic customer engagements.
       - label: Migrations to GitHub
         items:
           - Lead enterprise migrations onto GitHub end to end, from assessment and
@@ -54,11 +55,13 @@ roles:
             development.
           - Design governance, security and operating models for enterprise-scale GitHub
             environments.
-          - Guide modernisation programmes spanning platform engineering, DevOps and AI
-            engineering practices.
+          - text: Guide modernisation programmes spanning platform engineering, DevOps
+              and AI engineering practices.
+      # Duplicated in detail by the Speaking & community section, so the whole group
+      # stays on the page but is left out of the printed CV.
       - label: Leadership & community
+        screenOnly: true
         items:
-          - Lead cross-functional delivery teams through strategic customer engagements.
           - Speak at industry conferences, webinars, workshops and community events.
           - Internal GitHub Champion and Cloud Community Champion, contributing to
             enablement initiatives.

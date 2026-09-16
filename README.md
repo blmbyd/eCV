@@ -41,7 +41,7 @@ npm run dev          # http://localhost:4321/eCV
 | `npm run dev` | Dev server with hot reload, including on YAML edits |
 | `npm run build` | Static build into `dist/` |
 | `npm run pdf` | Renders `dist/cv.pdf` and `dist/og.png` from the build |
-| `npm run verify:pdf` | Checks the generated PDF actually has margins |
+| `npm run verify:pdf` | Checks the PDF has margins and excludes screen-only copy |
 | `npm run build:full` | `build`, then `pdf`, then `verify:pdf` |
 | `npm run check` | Astro and TypeScript diagnostics |
 
@@ -62,6 +62,29 @@ Useful details:
 - `scope` (1-10) is the vertical axis of the elevation profile — breadth of
   responsibility, not salary.
 - `chartLabel` overrides the elevation-profile label where horizontal room is tight.
+
+### Keeping copy off the printed CV
+
+The web page can carry more detail than the PDF. Anywhere a bullet or paragraph is a
+plain string it appears in both; write it as an object instead and it stays on the page
+but is left out of print and the PDF:
+
+```yaml
+items:
+  - This bullet appears on the page and in the PDF.
+  - text: This one is only on the page.
+```
+
+Whole groups can be excluded the same way:
+
+```yaml
+- label: Leadership & community
+  screenOnly: true
+  items: [...]
+```
+
+This is how the CV keeps a fuller narrative online while the PDF stays at four pages.
+`npm run verify:pdf` fails the build if any screen-only copy leaks into the PDF.
 
 In `community.yaml`:
 

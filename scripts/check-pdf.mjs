@@ -1,11 +1,12 @@
 /**
- * Guards the generated PDF against margin regressions.
+ * Guards the generated PDF against two regressions:
  *
- * Chromium honours the `@page` margin from src/styles/print.css in preference
- * to the `margin` option passed to page.pdf(). Overriding that rule at print
- * time silently produces a PDF with content running to the paper edge, which is
- * easy to miss because the page count improves. This check fails the build if
- * that happens again.
+ * 1. Margins. Chromium honours the `@page` margin from src/styles/print.css in
+ *    preference to the `margin` option passed to page.pdf(). Overriding that
+ *    rule at print time silently produces a PDF with content running to the
+ *    paper edge, which is easy to miss because the page count improves.
+ * 2. Screen-only copy. Anything marked `screenOnly` in the data must stay on the
+ *    web page and out of the printed CV.
  */
 import { readFileSync } from 'node:fs';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
@@ -82,6 +83,45 @@ if (failures.length) {
       'overrides it at print time in scripts/generate-pdf.mjs.',
   );
   process.exit(1);
+}
+
+/* ------------------------------------------------ screen-only copy leaks -- */
+
+/** Whitespace differs between the DOM and extracted PDF text, so ignore it. */
+const squash = (value) => value.replace(/\s+/g, '').toLowerCase();
+
+let manifest;
+try {
+  manifest = JSON.parse(readFileSync('.pdf-check.json', 'utf8'));
+} catch {
+  console.log('\nNo .pdf-check.json found; skipping the screen-only check.');
+}
+
+if (manifest?.screenOnly?.length) {
+  let pdfText = '';
+  for (let n = 1; n <= doc.numPages; n += 1) {
+    const { items } = await (await doc.getPage(n)).getTextContent();
+    pdfText += items.map((item) => item.str).join(' ');
+  }
+  pdfText = squash(pdfText);
+
+  const leaked = manifest.screenOnly.filter((entry) => {
+    const needle = squash(entry).slice(0, 60);
+    return needle.length > 20 && pdfText.includes(needle);
+  });
+
+  if (leaked.length) {
+    console.error('\nCopy marked screen-only leaked into the PDF:');
+    for (const entry of leaked) console.error(`  - ${entry.slice(0, 80)}...`);
+    console.error(
+      '\nCheck the [data-screen-only] rule in src/styles/print.css still applies.',
+    );
+    process.exit(1);
+  }
+
+  console.log(
+    `  ${manifest.screenOnly.length} screen-only block(s) correctly excluded from print.`,
+  );
 }
 
 console.log(`\n${FILE}: ${doc.numPages} pages, margins OK.`);
