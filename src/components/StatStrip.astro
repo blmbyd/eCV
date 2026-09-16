@@ -30,7 +30,7 @@ import { stats } from '../lib/cv';
   ul {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
   }
 
   li {
@@ -69,16 +69,17 @@ import { stats } from '../lib/cv';
     }
 
     ul {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8pt;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6pt;
     }
 
     .value {
-      font-size: 14pt;
+      font-size: 13pt;
     }
 
     .label {
-      font-size: 7.5pt;
+      font-size: 7pt;
+      max-width: none;
     }
   }
 </style>

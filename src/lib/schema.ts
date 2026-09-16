@@ -13,6 +13,14 @@ const yearMonth = z
   )
   .pipe(z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Expected a YYYY-MM value'));
 
+/** A full `YYYY-MM-DD` date, normalised the same way as {@link yearMonth}. */
+const isoDate = z
+  .union([z.string(), z.date()])
+  .transform((value) =>
+    value instanceof Date ? value.toISOString().slice(0, 10) : value.trim(),
+  )
+  .pipe(z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected a YYYY-MM-DD value'));
+
 const linkSchema = z.object({
   label: z.string(),
   handle: z.string(),
@@ -35,7 +43,6 @@ export const profileSchema = z.object({
   }),
   email: z.string().email(),
   availability: z.string(),
-  portrait: z.string().nullable().default(null),
   careerStart: yearMonth,
   independentSince: yearMonth,
   links: z.array(linkSchema).min(1),
@@ -137,12 +144,30 @@ export const interestsSchema = z.object({
     .min(1),
 });
 
+export const contributionSchema = z.object({
+  id: z.string(),
+  type: z.enum(['talk', 'video', 'writing', 'community']),
+  /** Null for ongoing work, which is excluded from the rolling twelve-month count. */
+  date: isoDate.nullable(),
+  title: z.string(),
+  /** BCP 47 tag for titles that are not in English. */
+  lang: z.string().optional(),
+  venue: z.string().optional(),
+  url: z.string().url().nullable().default(null),
+  summary: z.string(),
+});
+
+export const communitySchema = z.object({
+  contributions: z.array(contributionSchema).min(1),
+});
+
 export type Profile = z.infer<typeof profileSchema>;
 export type Role = z.infer<typeof roleSchema>;
 export type Skills = z.infer<typeof skillsSchema>;
 export type Certifications = z.infer<typeof certificationsSchema>;
 export type Education = z.infer<typeof educationSchema>;
 export type Interests = z.infer<typeof interestsSchema>;
+export type Contribution = z.infer<typeof contributionSchema>;
 
 /**
  * Parses a data file and fails the build with a readable message rather than a

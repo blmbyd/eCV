@@ -1,0 +1,132 @@
+# Speaking, writing and community contributions.
+#
+# type drives which group an entry lands in:
+#   talk      - conference sessions, meetups, workshops, webinars
+#   video     - podcasts and recorded video
+#   writing   - articles and publications
+#   community - open source and forum participation
+#
+# date may be null for ongoing work, which renders as "Ongoing" and is excluded
+# from the rolling twelve-month count in the stats strip.
+# lang marks a title that is not in English so screen readers pronounce it correctly.
+
+contributions:
+  - id: vibe-coding-podcast
+    type: video
+    date: 2026-07-22
+    title: 'Vibe Coding for Grown-Ups: AI in Professional Software Development'
+    venue: Podcast episode
+    url: https://open.spotify.com/episode/0NfKxZaFyZVEz0ScZACY63
+    summary: >-
+      Joined the hosts alongside Sebastian Brandt to talk through how AI is actually
+      changing software development, past the vibe-coding hype.
+
+  - id: ms-tech-summit-agentic
+    type: talk
+    date: 2026-06-16
+    title: 'GitHub Copilot: Agentic Workflows'
+    venue: MS Tech Summit, Poland
+    url: https://mstechsummit.pl/
+    summary: >-
+      Presented GitHub Copilot's agentic workflows at Poland's premier Microsoft
+      technology conference.
+
+  - id: cloudbuilders-prompting
+    type: video
+    date: 2026-06-11
+    title: 'Power of GitHub Copilot in VS Code: Essential Prompting'
+    venue: CloudBuilders Community, Ukraine
+    url: https://www.youtube.com/watch?v=IuoO053eeHE
+    summary: >-
+      Essential prompting practices with GitHub Copilot, with an emphasis on fitting them
+      into DevSecOps workflows.
+
+  - id: cloudbuilders-security
+    type: video
+    date: 2026-06-11
+    title: Security-First Development with GitHub
+    venue: CloudBuilders Community, Ukraine
+    url: https://www.youtube.com/watch?v=3rjNe4EmA3U
+    summary: >-
+      Security-first development practices with GitHub, again framed around DevSecOps
+      integration.
+
+  - id: softwareone-ua-webinar
+    type: talk
+    date: 2026-07-02
+    title: 'GitHub Copilot Unpacked: Features & Cost Control'
+    venue: SoftwareOne Ukraine, internal webinar
+    url: null
+    summary: >-
+      Live webinar covering GitHub Copilot features and cost optimisation strategies for
+      enterprise adoption.
+
+  - id: microsoft-poland-demo
+    type: talk
+    date: 2026-06-08
+    title: AI as Real Support for Developers
+    venue: Microsoft Poland office
+    url: https://www.linkedin.com/posts/softwareonepoland_copilot-nie-przyspieszy%C5%82-twojego-delivery-activity-7462842195486703616-J5Wq
+    summary: >-
+      Demo session on GitHub agentic workflows, helping developers adopt AI-assisted
+      coding practices in earnest.
+
+  - id: brave-ai-meetup
+    type: talk
+    date: 2026-03-19
+    title: Automate repository tasks with GitHub Agentic Workflows
+    venue: BRAVE AI community meetup
+    url: https://luma.com/3fhky4tw
+    summary: >-
+      Technical deep-dive on automating repository tasks, delivered to 40+ local
+      developers.
+
+  - id: bydgoszcz-data-community
+    type: talk
+    date: 2025-11-20
+    title: GitHub Copilot for Data
+    venue: Bydgoszcz Data Community
+    url: https://www.linkedin.com/events/87-spotkaniedatacommunitybydgos7394300871607488512/
+    summary: >-
+      Demonstrated AI-assisted data analysis workflows to 30+ data professionals.
+
+  - id: copilot-business-vs-enterprise
+    type: writing
+    date: 2025-10-23
+    title: Choosing between GitHub Copilot Business and Enterprise
+    venue: LinkedIn
+    url: https://www.linkedin.com/pulse/understanding-when-choose-github-copilot-business-vs-deep-stuczy%25C5%2584ski-ciacf/
+    summary: >-
+      How to pick the right plan based on premium request limits and the new Enterprise
+      Teams feature.
+
+  - id: dou-prompting-guide
+    type: writing
+    date: 2025-07-11
+    title: Практичне використання промптів у VS Code
+    lang: uk
+    venue: DOU.ua
+    url: https://dou.ua/forums/topic/54659/
+    summary: >-
+      A practical guide to VS Code prompt engineering for GitHub Copilot, published on
+      Ukraine's largest developer forum.
+
+  - id: training-repositories
+    type: community
+    date: null
+    title: Open-source training repositories
+    venue: GitHub
+    url: https://github.com/search?q=user%3Ablmbyd+topic%3Atraining&type=repositories
+    summary: >-
+      Hands-on exercises for learning GitHub Copilot, used in multiple community
+      workshops.
+
+  - id: partners-community-forum
+    type: community
+    date: null
+    title: GitHub Partners Community forum
+    venue: GitHub Partners Community
+    url: https://github.com/githubpartners-community/community/discussions?discussions_q=is%3Aopen+author%3Ablmbyd
+    summary: >-
+      Ongoing participation in discussions, answering questions and sharing practice with
+      other partners.
