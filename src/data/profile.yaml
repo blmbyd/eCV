@@ -25,27 +25,19 @@ location:
   country: Poland
   countryCode: PL
 
-email: pawel@stuczynski.eu
-
 availability: Open to conversations about GitHub, DevOps and developer experience
 
 # Used to compute "years in engineering" so the page never goes stale.
 careerStart: 2008-02
 independentSince: 2012-01
 
+# LinkedIn is deliberately the only contact route. No email address, personal
+# site or GitHub profile is published here.
 links:
   - label: LinkedIn
     handle: linkedin.com/in/pawelstuczynski
     url: https://www.linkedin.com/in/pawelstuczynski/
     icon: linkedin
-  - label: GitHub
-    handle: github.com/blmbyd
-    url: https://github.com/blmbyd
-    icon: github
-  - label: CodeSolutions.Pro
-    handle: codesolutions.pro
-    url: https://www.codesolutions.pro
-    icon: globe
 
 summary:
   - >-

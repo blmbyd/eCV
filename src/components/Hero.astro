@@ -48,10 +48,6 @@ const locationLabel = `${profile.location.city}, ${profile.location.country}`;
             <Icon name="pin" size={16} />
             <span>{locationLabel}</span>
           </li>
-          <li>
-            <Icon name="mail" size={16} />
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          </li>
           {
             profile.links.map((link) => (
               <li>

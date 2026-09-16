@@ -20,12 +20,6 @@ const updated = buildDate.toLocaleDateString('en-GB', {
       </div>
 
       <ul class="links">
-        <li>
-          <a href={`mailto:${profile.email}`}>
-            <Icon name="mail" size={16} />
-            {profile.email}
-          </a>
-        </li>
         {
           profile.links.map((link) => (
             <li>

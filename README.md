@@ -16,7 +16,7 @@ against a Zod schema at build time — a typo in a date or a missing field fails
 with a readable message instead of shipping a broken page.
 
 ```
-src/data/profile.yaml          name, contact, summary, links
+src/data/profile.yaml          name, location, summary, links
 src/data/experience.yaml       every role, its highlights and its tech stack
 src/data/skills.yaml           grouped skills plus the three "top skills"
 src/data/certifications.yaml   certifications by issuer, plus courses
@@ -116,9 +116,10 @@ attaches the rendered PDF as an artifact so changes can be reviewed before mergi
 
 ## Privacy
 
-This page is public and crawlable, so it deliberately carries only city-level location,
-an email address and public profile links. Street address, phone number, date of birth and
-photographs are not in this repository and should not be added.
+This page is public and crawlable, so it deliberately carries only city-level location
+and a single LinkedIn link. No email address, personal site or GitHub profile is
+published, and LinkedIn is the only contact route offered. Street address, phone number,
+date of birth and photographs are not in this repository and should not be added.
 
 ## Stack
 
