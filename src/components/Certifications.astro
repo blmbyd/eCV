@@ -186,8 +186,13 @@ import { certifications, certificationGroups, formatYear } from '../lib/cv';
     }
 
     .groups {
-      columns: 2;
-      column-gap: 12pt;
+      /* Chromium does not paginate multi-column containers gracefully, so the
+         print layout uses a plain grid instead. */
+      columns: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7pt 12pt;
+      align-content: start;
     }
 
     .group {
@@ -195,7 +200,7 @@ import { certifications, certificationGroups, formatYear } from '../lib/cv';
     }
 
     .group + .group {
-      margin-block-start: 7pt;
+      margin-block-start: 0;
     }
 
     .group ul {

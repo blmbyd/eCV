@@ -19,8 +19,8 @@ roles:
     scope: 10
     featured: true
     summary: >-
-      Technical pre-sales and solution architecture for enterprise customers adopting
-      GitHub, DevOps and AI-assisted development at scale.
+      Technical pre-sales, solution architecture and migration delivery for enterprise
+      customers adopting GitHub, DevOps and AI-assisted development at scale.
     groups:
       - label: Technical pre-sales & customer advisory
         items:
@@ -34,6 +34,18 @@ roles:
             roadmaps.
           - Support customers all the way through evaluation, implementation and
             adoption — not just to signature.
+      - label: Migrations to GitHub
+        items:
+          - Lead enterprise migrations onto GitHub end to end, from assessment and
+            migration design through cutover and post-migration adoption.
+          - Size and de-risk the work up front through repository and pipeline inventory,
+            dependency mapping and phased cutover planning.
+          - Rebuild automation on GitHub Actions as part of the move, rather than lifting
+            existing pipelines across unchanged.
+          - Preserve history, permissions and traceability so teams keep delivering
+            through cutover instead of pausing around it.
+          - Run pilot waves and enablement so teams land on the new platform productive
+            rather than stranded on it.
       - label: GitHub & AI transformation
         items:
           - Advise organisations on GitHub Enterprise and GitHub Copilot adoption
@@ -50,19 +62,6 @@ roles:
           - Speak at industry conferences, webinars, workshops and community events.
           - Internal GitHub Champion and Cloud Community Champion, contributing to
             enablement initiatives.
-    tech:
-      - label: Platform
-        items:
-          - GitHub Enterprise
-          - GitHub Actions
-          - GitHub Advanced Security
-          - GitHub Copilot
-          - Azure DevOps
-          - Azure
-      - label: Code
-        items:
-          - PowerShell
-          - YAML
 
   - id: self-employed
     title: Developer / DevOps

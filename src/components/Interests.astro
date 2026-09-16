@@ -55,11 +55,18 @@ import { interests } from '../lib/cv';
   @media print {
     .cards {
       grid-template-columns: repeat(4, 1fr);
-      gap: 5pt;
+      gap: 4pt;
     }
 
     .card {
-      padding: 5pt;
+      padding: 3pt 0 3pt 5pt;
+      border: 0;
+      border-inline-start: 0.75pt solid var(--border-strong);
+      border-radius: 0;
+    }
+
+    p {
+      line-height: 1.28;
     }
 
     .icon {
