@@ -4,6 +4,7 @@ import skillsRaw from '../data/skills.yaml';
 import certificationsRaw from '../data/certifications.yaml';
 import educationRaw from '../data/education.yaml';
 import interestsRaw from '../data/interests.yaml';
+import communityRaw from '../data/community.yaml';
 
 import {
   parseData,
@@ -13,7 +14,9 @@ import {
   certificationsSchema,
   educationSchema,
   interestsSchema,
+  communitySchema,
   type Role,
+  type Contribution,
 } from './schema';
 
 export const profile = parseData(profileSchema, profileRaw, 'profile.yaml');
@@ -29,6 +32,8 @@ export const { education, languages } = parseData(
   'education.yaml',
 );
 export const { interests } = parseData(interestsSchema, interestsRaw, 'interests.yaml');
+
+const { contributions } = parseData(communitySchema, communityRaw, 'community.yaml');
 
 const { roles } = parseData(experienceSchema, experienceRaw, 'experience.yaml');
 
@@ -110,6 +115,52 @@ const organisationCount = new Set(
   roles.filter((role) => role.featured).map((role) => role.orgShort),
 ).size;
 
+/* -------------------------------------------------------------------------- */
+/*  Speaking and community                                                     */
+/* -------------------------------------------------------------------------- */
+
+export function formatContributionDate(date: string | null): string {
+  if (!date) return 'Ongoing';
+  const parsed = new Date(`${date}T00:00:00Z`);
+  return `${parsed.getUTCDate()} ${MONTH_NAMES[parsed.getUTCMonth()]} ${parsed.getUTCFullYear()}`;
+}
+
+/** The bare host, used as a visible reference when the page is printed. */
+export function linkHost(url: string): string {
+  return new URL(url).hostname.replace(/^www\./, '');
+}
+
+const CONTRIBUTION_GROUPS = [
+  { type: 'talk', label: 'Talks & workshops', icon: 'mic' },
+  { type: 'video', label: 'Podcasts & video', icon: 'play' },
+  { type: 'writing', label: 'Writing', icon: 'pen' },
+  { type: 'community', label: 'Open source & community', icon: 'box' },
+] as const;
+
+/** Newest first, with undated ongoing work sorted to the end of its group. */
+const byDateDescending = (a: Contribution, b: Contribution) => {
+  if (a.date === b.date) return 0;
+  if (!a.date) return 1;
+  if (!b.date) return -1;
+  return a.date < b.date ? 1 : -1;
+};
+
+export const contributionGroups = CONTRIBUTION_GROUPS.map((group) => ({
+  ...group,
+  items: contributions.filter((item) => item.type === group.type).sort(byDateDescending),
+})).filter((group) => group.items.length > 0);
+
+/**
+ * Rolling count of dated contributions from the last twelve months. Undated
+ * ongoing work is excluded so the number stays defensible.
+ */
+const recentContributionCount = (() => {
+  const cutoff = new Date(buildDate);
+  cutoff.setUTCFullYear(cutoff.getUTCFullYear() - 1);
+  const cutoffKey = cutoff.toISOString().slice(0, 10);
+  return contributions.filter((item) => item.date && item.date >= cutoffKey).length;
+})();
+
 export const stats = [
   {
     value: yearsSince(profile.careerStart),
@@ -123,6 +174,10 @@ export const stats = [
   {
     value: certificationCount,
     label: 'professional certifications',
+  },
+  {
+    value: recentContributionCount,
+    label: 'talks, articles & community contributions in the last year',
   },
   {
     value: yearsSince(profile.independentSince),

@@ -29,10 +29,6 @@ email: pawel@stuczynski.eu
 
 availability: Open to conversations about GitHub, DevOps and developer experience
 
-# Drop a square image into public/ and put its file name here, e.g. "portrait.jpg".
-# Left empty, the hero falls back to a monogram.
-portrait: null
-
 # Used to compute "years in engineering" so the page never goes stale.
 careerStart: 2008-02
 independentSince: 2012-01

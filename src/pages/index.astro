@@ -6,6 +6,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import ElevationProfile from '../components/ElevationProfile.astro';
 import ExperienceCard from '../components/ExperienceCard.astro';
 import EarlierRoles from '../components/EarlierRoles.astro';
+import Community from '../components/Community.astro';
 import Skills from '../components/Skills.astro';
 import Certifications from '../components/Certifications.astro';
 import Education from '../components/Education.astro';
@@ -62,6 +63,18 @@ import { profile, featuredRoles, parallelRoles } from '../lib/cv';
           }
 
           <EarlierRoles />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="community-title">
+        <div class="wrap">
+          <SectionHeading
+            id="community-title"
+            title="Speaking & community"
+            eyebrow="Sharing the map"
+            lead="Conference talks, meetups, podcasts, writing and open source. Most of the technical conversations I enjoy most happen outside customer engagements."
+          />
+          <Community />
         </div>
       </section>
 

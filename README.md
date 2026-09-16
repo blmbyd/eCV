@@ -16,17 +16,18 @@ against a Zod schema at build time — a typo in a date or a missing field fails
 with a readable message instead of shipping a broken page.
 
 ```
-src/data/profile.yaml          name, contact, summary, links, portrait
+src/data/profile.yaml          name, contact, summary, links
 src/data/experience.yaml       every role, its highlights and its tech stack
 src/data/skills.yaml           grouped skills plus the three "top skills"
 src/data/certifications.yaml   certifications by issuer, plus courses
 src/data/education.yaml        degrees and languages
+src/data/community.yaml        talks, podcasts, writing and open source
 src/data/interests.yaml        the "Beyond the desk" cards
 ```
 
 Derived values are computed, never typed by hand: years in engineering, role durations,
-organisation counts, certification counts and the career elevation profile all come from
-the data above. They cannot drift.
+organisation counts, certification counts, the rolling twelve-month contribution count and
+the career elevation profile all come from the data above. They cannot drift.
 
 ## Local development
 
@@ -61,15 +62,13 @@ Useful details:
   responsibility, not salary.
 - `chartLabel` overrides the elevation-profile label where horizontal room is tight.
 
-## Adding a portrait
+In `community.yaml`:
 
-Drop a square image into `public/` and point `profile.yaml` at it:
-
-```yaml
-portrait: portrait.jpg
-```
-
-Without it, the hero falls back to a monogram. Roughly 600x600 is plenty.
+- `type` is one of `talk`, `video`, `writing` or `community`, and decides the group.
+- `date: null` means ongoing. Those entries render as "Ongoing" and are left out of the
+  rolling twelve-month count in the stats strip.
+- `url: null` renders the title unlinked, for things with no public link.
+- `lang` marks a title that is not in English, for example `lang: uk`.
 
 ## The PDF
 
@@ -117,8 +116,8 @@ attaches the rendered PDF as an artifact so changes can be reviewed before mergi
 ## Privacy
 
 This page is public and crawlable, so it deliberately carries only city-level location,
-an email address and public profile links. Street address, phone number and date of birth
-are not in this repository and should not be added.
+an email address and public profile links. Street address, phone number, date of birth and
+photographs are not in this repository and should not be added.
 
 ## Stack
 

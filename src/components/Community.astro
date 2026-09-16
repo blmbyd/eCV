@@ -1,0 +1,173 @@
+---
+import Icon from './Icon.astro';
+import { contributionGroups, formatContributionDate, linkHost } from '../lib/cv';
+---
+
+<div class="community">
+  {
+    contributionGroups.map((group) => (
+      <section class="group">
+        <h3>
+          <span class="icon" aria-hidden="true">
+            <Icon name={group.icon} size={16} />
+          </span>
+          {group.label}
+          <span class="count">{group.items.length}</span>
+        </h3>
+
+        <ul>
+          {group.items.map((item) => (
+            <li class="item">
+              <p class="date mono">{formatContributionDate(item.date)}</p>
+              <div class="body">
+                <h4 lang={item.lang}>
+                  {item.url ? (
+                    <a href={item.url} rel="noopener" data-host={linkHost(item.url)}>
+                      {item.title}
+                    </a>
+                  ) : (
+                    item.title
+                  )}
+                </h4>
+                {item.venue && <p class="venue">{item.venue}</p>}
+                <p class="summary">{item.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .community {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 64rem) {
+    .community {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-l) var(--space-xl);
+    }
+  }
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding-block-end: var(--space-2xs);
+    border-block-end: 1px solid var(--border);
+    font-size: var(--step-0);
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: var(--radius-s);
+    background: var(--accent-wash);
+    color: var(--accent);
+    flex: none;
+  }
+
+  .count {
+    margin-inline-start: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 400;
+    color: var(--text-subtle);
+  }
+
+  ul {
+    margin-block-start: var(--space-s);
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .item {
+    display: grid;
+    gap: 2px var(--space-s);
+  }
+
+  @media (min-width: 30rem) {
+    .item {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+    }
+  }
+
+  .date {
+    color: var(--text-subtle);
+    font-size: var(--step--2);
+    padding-block-start: 0.2em;
+  }
+
+  h4 {
+    font-size: var(--step-0);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  h4 a {
+    color: inherit;
+    text-decoration: none;
+    border-block-end: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  h4 a:hover {
+    color: var(--accent);
+  }
+
+  .venue {
+    margin-block-start: 2px;
+    font-size: var(--step--1);
+    color: var(--amber);
+  }
+
+  .summary {
+    margin-block-start: var(--space-3xs);
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+
+  @media print {
+    .community {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10pt 14pt;
+    }
+
+    .group {
+      break-inside: auto;
+    }
+
+    h3 {
+      break-after: avoid;
+    }
+
+    .icon,
+    .count {
+      display: none;
+    }
+
+    ul {
+      margin-block-start: 5pt;
+      gap: 5pt;
+    }
+
+    .item {
+      grid-template-columns: 48pt minmax(0, 1fr);
+      gap: 0 7pt;
+      break-inside: avoid;
+    }
+
+    /* Links cannot be followed on paper, so show where they point. */
+    h4 a[data-host]::after {
+      content: ' (' attr(data-host) ')';
+      font-weight: 400;
+      color: var(--text-subtle);
+    }
+  }
+</style>

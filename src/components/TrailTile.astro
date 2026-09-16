@@ -1,0 +1,118 @@
+---
+/**
+ * A framed crop of the topographic motif with a ridge line across it, used as
+ * the hero's visual anchor. Purely decorative: no photo, no meaning to convey.
+ */
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+const round = (value: number) => Math.round(value * 10) / 10;
+
+function closedSmoothPath(points: Point[]): string {
+  const count = points.length;
+  const at = (index: number) => points[(index + count) % count]!;
+  let d = `M${round(at(0).x)},${round(at(0).y)}`;
+
+  for (let i = 0; i < count; i += 1) {
+    const p0 = at(i - 1);
+    const p1 = at(i);
+    const p2 = at(i + 1);
+    const p3 = at(i + 2);
+    d +=
+      ` C${round(p1.x + (p2.x - p0.x) / 6)},${round(p1.y + (p2.y - p0.y) / 6)}` +
+      ` ${round(p2.x - (p3.x - p1.x) / 6)},${round(p2.y - (p3.y - p1.y) / 6)}` +
+      ` ${round(p2.x)},${round(p2.y)}`;
+  }
+
+  return `${d}Z`;
+}
+
+function contour(cx: number, cy: number, radius: number, seed: number): string {
+  const samples = 44;
+  const points: Point[] = [];
+
+  for (let i = 0; i < samples; i += 1) {
+    const angle = (i / samples) * Math.PI * 2;
+    const wobble =
+      Math.sin(angle * 3 + seed) * 0.11 +
+      Math.sin(angle * 5 - seed * 1.7) * 0.06 +
+      Math.sin(angle * 2 + seed * 0.6) * 0.09;
+    const r = radius * (1 + wobble);
+    points.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r * 0.74 });
+  }
+
+  return closedSmoothPath(points);
+}
+
+const rings = Array.from({ length: 9 }, (_, index) =>
+  contour(120, 132, 16 + index * 15, 1.7 + index * 0.24),
+);
+
+/** A single ridge crossing the tile, echoing the career elevation profile. */
+const ridge = 'M0 176 C34 170 52 128 78 122 C104 116 118 150 142 140 C168 130 196 78 240 66';
+---
+
+<div class="tile" aria-hidden="true">
+  <svg viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice">
+    <g class="rings">
+      {rings.map((d) => <path d={d} />)}
+    </g>
+    <path class="ridge" d={ridge}></path>
+    <path class="ridge-glow" d={ridge}></path>
+  </svg>
+</div>
+
+<style>
+  .tile {
+    aspect-ratio: 1;
+    max-width: 15rem;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background:
+      radial-gradient(
+        120% 120% at 28% 0%,
+        color-mix(in srgb, var(--accent) 20%, transparent),
+        transparent 64%
+      ),
+      var(--bg-raised);
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .rings path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 0.9;
+    opacity: 0.22;
+  }
+
+  .ridge {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .ridge-glow {
+    fill: none;
+    stroke: var(--amber);
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    /* Zero-length dashes with round caps become waypoint dots along the ridge. */
+    stroke-dasharray: 0 30;
+    opacity: 0.95;
+  }
+
+  @media print {
+    .tile {
+      display: none;
+    }
+  }
+</style>
