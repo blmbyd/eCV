@@ -67,7 +67,8 @@ In `community.yaml`:
 - `type` is one of `talk`, `video`, `writing` or `community`, and decides the group.
 - `date: null` means ongoing. Those entries render as "Ongoing" and are left out of the
   rolling twelve-month count in the stats strip.
-- `url: null` renders the title unlinked, for things with no public link.
+- `url: null` renders the title unlinked, for things with no public link, or whose link
+  is private and must not be published.
 - `lang` marks a title that is not in English, for example `lang: uk`.
 
 ## The PDF

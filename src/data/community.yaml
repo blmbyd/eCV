@@ -121,12 +121,14 @@ contributions:
       Hands-on exercises for learning GitHub Copilot, used in multiple community
       workshops.
 
+  # Deliberately unlinked: the Partners Community is private, so its URL must not
+  # be published here. Do not add one.
   - id: partners-community-forum
     type: community
     date: null
     title: GitHub Partners Community forum
     venue: GitHub Partners Community
-    url: https://github.com/githubpartners-community/community/discussions?discussions_q=is%3Aopen+author%3Ablmbyd
+    url: null
     summary: >-
       Ongoing participation in discussions, answering questions and sharing practice with
       other partners.
