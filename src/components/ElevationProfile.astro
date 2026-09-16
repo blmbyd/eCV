@@ -1,0 +1,236 @@
+---
+import { elevation } from '../lib/cv';
+
+const { view, viewBox, ridgeLine, ridgeArea, waypoints, yearTicks, parallel } = elevation;
+---
+
+<figure class="profile">
+  <svg
+    viewBox={viewBox}
+    role="img"
+    aria-labelledby="elevation-title elevation-desc"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <title id="elevation-title">Career elevation profile</title>
+    <desc id="elevation-desc">
+      A mountain-profile chart of scope and seniority over time. Each marker is a role,
+      also listed in full below.
+    </desc>
+
+    <defs>
+      <linearGradient id="ridge-fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--ridge-fill-top)"></stop>
+        <stop offset="100%" stop-color="var(--ridge-fill-bottom)"></stop>
+      </linearGradient>
+    </defs>
+
+    {
+      yearTicks.map((tick) => (
+        <g class="tick">
+          <line x1={tick.x} y1={view.padTop} x2={tick.x} y2={view.height} />
+          <text x={tick.labelX} y={view.axisY} text-anchor="middle">
+            {tick.year}
+          </text>
+        </g>
+      ))
+    }
+
+    <path class="ridge-area" d={ridgeArea} fill="url(#ridge-fill)"></path>
+    <path class="ridge-line" d={ridgeLine}></path>
+    <line class="ground" x1="0" y1={view.height} x2={view.width} y2={view.height}></line>
+
+    {
+      parallel && (
+        <g class="lane">
+          <rect
+            x={parallel.x}
+            y={parallel.y}
+            width={parallel.width}
+            height={parallel.height}
+            rx={parallel.height / 2}
+          />
+          <text x={parallel.x + 12} y={parallel.y + parallel.height / 2 + 3.5}>
+            {parallel.label}
+          </text>
+        </g>
+      )
+    }
+
+    {
+      waypoints.map((point) => (
+        <a class="waypoint" href={`#role-${point.id}`} data-waypoint={point.id}>
+          <title>{`${point.title} — ${point.orgShort}, ${point.range}`}</title>
+          <line
+            class="stem"
+            x1={point.x}
+            y1={point.y}
+            x2={point.x}
+            y2={view.height}
+          />
+          <circle class="halo" cx={point.x} cy={point.y} r="11" />
+          <circle class="dot" cx={point.x} cy={point.y} r="4.5" />
+          <text
+            class="label"
+            x={point.labelX}
+            y={point.labelY}
+            text-anchor="middle"
+            dominant-baseline={point.labelAbove ? 'auto' : 'hanging'}
+          >
+            {point.label}
+          </text>
+        </a>
+      ))
+    }
+  </svg>
+
+  <figcaption>
+    Height is scope and seniority, not salary. The dotted lane is the independent
+    practice that has run alongside since 2012. Select a marker to jump to that role.
+  </figcaption>
+</figure>
+
+<script>
+  const waypoints = document.querySelectorAll<SVGAElement>('[data-waypoint]');
+
+  for (const waypoint of waypoints) {
+    const id = waypoint.dataset.waypoint;
+    if (!id) continue;
+    const card = document.getElementById(`role-${id}`);
+    if (!card) continue;
+
+    const link = (active: boolean) => {
+      waypoint.classList.toggle('is-active', active);
+      card.classList.toggle('is-linked', active);
+    };
+
+    waypoint.addEventListener('pointerenter', () => link(true));
+    waypoint.addEventListener('pointerleave', () => link(false));
+    waypoint.addEventListener('focus', () => link(true));
+    waypoint.addEventListener('blur', () => link(false));
+    card.addEventListener('pointerenter', () => link(true));
+    card.addEventListener('pointerleave', () => link(false));
+  }
+</script>
+
+<style>
+  .profile {
+    margin-block-end: var(--space-xl);
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  figcaption {
+    margin-block-start: var(--space-2xs);
+    max-width: var(--measure);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+
+  .tick line {
+    stroke: var(--border);
+    stroke-width: 1;
+    stroke-dasharray: 2 6;
+  }
+
+  .tick text {
+    fill: var(--text-subtle);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ridge-line {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ground {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+
+  .lane rect {
+    fill: none;
+    stroke: var(--amber);
+    stroke-width: 1.2;
+    stroke-dasharray: 3 5;
+    opacity: 0.85;
+  }
+
+  .lane text {
+    fill: var(--text-subtle);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+  }
+
+  .waypoint {
+    cursor: pointer;
+  }
+
+  .waypoint .stem {
+    stroke: var(--accent);
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+    opacity: 0.35;
+  }
+
+  .waypoint .halo {
+    fill: var(--accent);
+    opacity: 0;
+    transition: opacity 180ms var(--ease);
+  }
+
+  .waypoint .dot {
+    fill: var(--bg);
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    transition: r 180ms var(--ease);
+  }
+
+  .waypoint .label {
+    fill: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .waypoint:hover .halo,
+  .waypoint:focus-visible .halo,
+  .waypoint.is-active .halo {
+    opacity: 0.18;
+  }
+
+  .waypoint:hover .dot,
+  .waypoint:focus-visible .dot,
+  .waypoint.is-active .dot {
+    r: 6;
+    fill: var(--accent);
+  }
+
+  .waypoint:hover .label,
+  .waypoint:focus-visible .label,
+  .waypoint.is-active .label {
+    fill: var(--text);
+  }
+
+  .waypoint:focus-visible {
+    outline: none;
+  }
+
+  .waypoint:focus-visible .dot {
+    stroke: var(--amber);
+  }
+
+  @media print {
+    .profile {
+      display: none;
+    }
+  }
+</style>

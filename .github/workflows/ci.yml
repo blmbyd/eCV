@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and type-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Validates every src/data/*.yaml file against its schema as a side effect.
+      - name: Build the site
+        run: npm run build
+
+      - name: Type-check
+        run: npm run check
+
+      - name: Install Chromium for PDF rendering
+        run: npx playwright install --with-deps chromium
+
+      - name: Render cv.pdf and the Open Graph image
+        run: npm run pdf
+
+      - name: Upload the preview build
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-preview
+          path: |
+            dist/cv.pdf
+            dist/og.png
+          if-no-files-found: error

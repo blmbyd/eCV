@@ -1,0 +1,396 @@
+# Career history.
+#
+# `track: main` roles form the ridge of the elevation profile.
+# `track: parallel` roles run alongside it (independent practice).
+# `featured: false` roles render as compact single-line entries under "Earlier roles".
+# `scope` (1-10) is the vertical axis of the elevation profile: breadth of
+# responsibility and seniority, not salary or headcount.
+
+roles:
+  - id: predica
+    title: Lead Expert
+    org: Predica, a SoftwareOne company
+    orgShort: SoftwareOne
+    chartLabel: SoftwareOne
+    start: 2022-10
+    end: null
+    location: Poland · remote
+    track: main
+    scope: 10
+    featured: true
+    summary: >-
+      Technical pre-sales and solution architecture for enterprise customers adopting
+      GitHub, DevOps and AI-assisted development at scale.
+    groups:
+      - label: Technical pre-sales & customer advisory
+        items:
+          - Lead technical discovery with enterprise customers to surface the real
+            constraints in their software delivery, not just the stated ones.
+          - Translate business and engineering requirements into GitHub-based solution
+            architectures.
+          - Deliver executive briefings, technical workshops, proofs of concept and live
+            product demonstrations.
+          - Partner with account teams to define adoption strategies and technical
+            roadmaps.
+          - Support customers all the way through evaluation, implementation and
+            adoption — not just to signature.
+      - label: GitHub & AI transformation
+        items:
+          - Advise organisations on GitHub Enterprise and GitHub Copilot adoption
+            strategy.
+          - Run ROI and value-realisation assessments for AI-assisted software
+            development.
+          - Design governance, security and operating models for enterprise-scale GitHub
+            environments.
+          - Guide modernisation programmes spanning platform engineering, DevOps and AI
+            engineering practices.
+      - label: Leadership & community
+        items:
+          - Lead cross-functional delivery teams through strategic customer engagements.
+          - Speak at industry conferences, webinars, workshops and community events.
+          - Internal GitHub Champion and contributor to enablement initiatives.
+    tech:
+      - label: Platform
+        items:
+          - GitHub Enterprise
+          - GitHub Actions
+          - GitHub Advanced Security
+          - GitHub Copilot
+          - Azure DevOps
+          - Azure
+      - label: Code
+        items:
+          - PowerShell
+          - YAML
+
+  - id: self-employed
+    title: Developer / DevOps
+    org: Self-employed · CodeSolutions.Pro
+    orgShort: CodeSolutions.Pro
+    orgUrl: https://www.codesolutions.pro
+    start: 2012-01
+    end: null
+    location: Bydgoszcz, Poland
+    track: parallel
+    scope: 6
+    featured: true
+    summary: >-
+      An independent practice that has run in parallel with every employed role since
+      2012 — small enough to stay hands-on, long-lived enough to have owned production
+      systems end to end.
+    groups:
+      - label: What the work involves
+        items:
+          - Client operations — scoping, statements of work and planning.
+          - Software development — web and desktop database applications.
+          - Running and maintaining production environments, both cloud and a physical
+            server room.
+          - System integration between third-party and bespoke systems.
+    tech:
+      - label: Code
+        items:
+          - C#
+          - .NET
+          - Java SE
+          - PHP
+      - label: Data
+        items:
+          - SQL Server
+          - Oracle Database
+          - PostgreSQL
+          - MySQL
+      - label: Operations
+        items:
+          - PowerShell
+          - IIS
+          - DFS
+          - HAProxy
+          - Kemp
+          - Graylog
+          - PRTG
+
+  - id: hitachi-energy
+    title: DevOps Engineer
+    org: Hitachi Energy
+    orgShort: Hitachi Energy
+    start: 2020-12
+    end: 2022-10
+    location: Poland
+    track: main
+    scope: 8
+    featured: true
+    summary: >-
+      Part of a team whose entire remit was making other developers' lives easier —
+      pipelines, environments and the move to Azure.
+    groups:
+      - label: Highlights
+        items:
+          - Monitored and administered production and staging environments.
+          - Owned build pipelines and CI deployment in Azure DevOps.
+          - Wrote small internal tools in C# to take friction out of the deployment
+            process.
+          - Worked alongside QA on problem-solving, including fixing issues directly.
+          - Contributed to the migration to Azure Cloud.
+    tech:
+      - label: Environment
+        items:
+          - Azure DevOps
+          - Azure
+          - Windows Server
+          - IIS
+          - Hyper-V
+          - MSSQL
+      - label: Quality & observability
+        items:
+          - SonarCloud
+          - Elasticsearch
+          - Kibana
+      - label: Code
+        items:
+          - .NET Framework
+          - .NET Core
+          - PowerShell
+
+  - id: certifeye
+    title: Full Stack Developer
+    org: Certifeye
+    orgShort: Certifeye
+    start: 2019-04
+    end: 2020-11
+    location: Netherlands · remote
+    track: main
+    scope: 7
+    featured: true
+    summary: >-
+      Design-team member with a wide remit, from maintaining a large legacy ASP.NET
+      codebase to owning a greenfield product end to end.
+    groups:
+      - label: Highlights
+        items:
+          - Member of the design team, with real decision-making scope across the
+            product.
+          - Built new features and fixed defects in the main ASP.NET WebForms
+            application.
+          - Designed, built and launched a new product — Angular front end and C# API,
+            hosted on Azure — owning the technology choices throughout.
+    tech:
+      - label: Code
+        items:
+          - C#
+          - TypeScript
+          - JavaScript
+      - label: Frameworks
+        items:
+          - ASP.NET WebForms
+          - ASP.NET Web API
+          - Angular
+          - DevExpress
+          - DevExtreme
+      - label: Platform
+        items:
+          - Azure
+          - MSSQL
+          - GitHub
+
+  - id: supercontrol-devops
+    title: DevOps Engineer
+    org: SuperControl · SuperWebs Ltd
+    orgShort: SuperControl
+    chartLabel: DevOps turn
+    start: 2018-11
+    end: 2019-03
+    location: Poland · Scotland
+    track: main
+    scope: 7
+    featured: true
+    summary: >-
+      Moved from building the product to keeping it standing — first line on every
+      incident for a live booking and management platform.
+    groups:
+      - label: Highlights
+        items:
+          - Monitored system health from the code's point of view, not just the
+            infrastructure's.
+          - First line on every emergency — locate the problem, kill it, then fix the
+            cause.
+          - Improved application code where it touched infrastructure, and vice versa.
+          - Owned pipelines and CI deployment in Azure DevOps.
+          - Worked with the Security Engineer on GDPR and PCI compliance.
+    tech:
+      - label: Operations
+        items:
+          - Azure DevOps
+          - AWS
+          - Windows Server
+          - PowerShell
+          - IIS
+          - DFS
+          - HAProxy
+          - Kemp
+      - label: Observability
+        items:
+          - Graylog
+          - PRTG
+      - label: Data
+        items:
+          - MySQL (Galera Cluster)
+          - Redis (Webdis)
+
+  - id: supercontrol-dev
+    title: Web Applications Developer
+    org: SuperControl · SuperWebs Ltd
+    orgShort: SuperControl
+    start: 2015-09
+    end: 2018-11
+    location: Poland · Scotland
+    track: main
+    scope: 6
+    featured: true
+    summary: >-
+      Core development on a live booking and management system running in continuous
+      integration.
+    groups:
+      - label: Highlights
+        items:
+          - Developed the main web application within a continuous integration system.
+          - Worked with the sysadmin team to improve system performance and reliability.
+          - Close cooperation with support, turning reported problems into fixes.
+    tech:
+      - label: Code
+        items:
+          - C#
+          - ASP.NET MVC
+          - VBScript (Classic ASP)
+          - JavaScript
+          - jQuery
+          - HTML & CSS
+      - label: Frameworks
+        items:
+          - .NET Framework
+          - .NET Core
+      - label: Tooling
+        items:
+          - Visual Studio
+          - Git
+
+  - id: nmg
+    title: Software Developer
+    org: NMG (Network Media Group) sp. z o.o.
+    orgShort: NMG
+    start: 2010-08
+    end: 2015-01
+    location: Bydgoszcz, Poland
+    track: main
+    scope: 5
+    featured: true
+    summary: >-
+      Utilities metering and analytics — software that told organisations where their
+      electricity, water and gas actually went.
+    groups:
+      - label: Highlights
+        items:
+          - Team member implementing an application for analysing, managing, controlling
+            and monitoring utilities consumption.
+          - Built tools supporting application rollout and debugging.
+          - Third-line helpdesk support for the systems the team shipped.
+    tech:
+      - label: Primary
+        items:
+          - C# .NET
+          - Microsoft SQL Server
+      - label: Secondary
+        items:
+          - Java SE
+          - Delphi
+
+  - id: frontline
+    title: Game Developer
+    org: FRONTLINE Studios
+    orgShort: FRONTLINE Studios
+    chartLabel: Frontline
+    start: 2008-09
+    end: 2010-08
+    location: Bydgoszcz, Poland
+    track: main
+    scope: 4
+    featured: true
+    summary: >-
+      Handheld console game development, plus the editor tooling the rest of the studio
+      depended on.
+    groups:
+      - label: Highlights
+        items:
+          - Game development for handheld consoles, working to tight platform
+            constraints.
+          - Built tools that supported the studio's game development process.
+    tech:
+      - label: Code
+        items:
+          - C/C++
+          - C# .NET
+      - label: Tooling
+        items:
+          - Visual Studio
+          - Eclipse
+          - SVN
+          - Mantis
+          - SharePoint
+
+  - id: kom-pro
+    title: Implementation & Training Specialist
+    org: Kom-Pro Usługi Informatyczne
+    orgShort: Kom-Pro
+    start: 2008-02
+    end: 2008-07
+    location: Bydgoszcz, Poland
+    track: main
+    scope: 3
+    featured: true
+    summary: >-
+      First role in IT, and the one that set the pattern: sit with the customer, find
+      out what they actually need, then make the software do it.
+    groups:
+      - label: Highlights
+        items:
+          - Implemented the company's software at customer sites.
+          - Ran functional analysis and on-site training.
+          - Provided technical support to customers in production.
+    tech:
+      - label: Stack
+        items:
+          - PostgreSQL
+          - Delphi
+          - PHP
+
+  - id: rotor
+    title: Engineer / Seller
+    org: Rotor sp. z o.o.
+    orgShort: Rotor
+    start: 2007-11
+    end: 2008-01
+    location: Bydgoszcz, Poland
+    track: main
+    scope: 2
+    featured: false
+
+  - id: phoenix-berry-farms
+    title: Crop Technician
+    org: Phoenix Berry Farms
+    orgShort: Phoenix Berry Farms
+    start: 2007-07
+    end: 2007-09
+    location: Martham, United Kingdom
+    track: main
+    scope: 1
+    featured: false
+
+  - id: belma
+    title: Toolmaker
+    org: Belma Accessories Systems Sp. z o.o.
+    orgShort: Belma
+    start: 2004-09
+    end: 2007-07
+    location: Bydgoszcz, Poland
+    track: main
+    scope: 1
+    featured: false

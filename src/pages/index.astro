@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import StatStrip from '../components/StatStrip.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ElevationProfile from '../components/ElevationProfile.astro';
+import ExperienceCard from '../components/ExperienceCard.astro';
+import EarlierRoles from '../components/EarlierRoles.astro';
+import Skills from '../components/Skills.astro';
+import Certifications from '../components/Certifications.astro';
+import Education from '../components/Education.astro';
+import Interests from '../components/Interests.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { profile, featuredRoles, parallelRoles } from '../lib/cv';
+---
+
+<Base>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <Hero />
+    <StatStrip />
+
+    <main id="main">
+      <section class="section" aria-labelledby="about-title">
+        <div class="wrap">
+          <SectionHeading id="about-title" title="About" eyebrow="Who you are hiring" />
+          <div class="about">
+            <div class="prose">
+              {profile.summary.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="experience-title">
+        <div class="wrap">
+          <SectionHeading
+            id="experience-title"
+            title="Experience"
+            eyebrow="The climb so far"
+            lead="Eighteen years from handheld game consoles to enterprise developer platforms."
+          />
+
+          <ElevationProfile />
+
+          <div class="roles">
+            {featuredRoles.map((role) => <ExperienceCard role={role} />)}
+          </div>
+
+          {
+            parallelRoles.length > 0 && (
+              <div class="parallel">
+                <h3 class="eyebrow">Running in parallel</h3>
+                <div class="roles">
+                  {parallelRoles.map((role) => (
+                    <ExperienceCard role={role} />
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          <EarlierRoles />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="skills-title">
+        <div class="wrap">
+          <SectionHeading
+            id="skills-title"
+            title="Skills"
+            eyebrow="What is in the pack"
+            lead="Grouped by how the work actually breaks down, not alphabetically."
+          />
+          <Skills />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="certifications-title">
+        <div class="wrap">
+          <SectionHeading
+            id="certifications-title"
+            title="Certifications & training"
+            eyebrow="Checkpoints"
+          />
+          <Certifications />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="education-title">
+        <div class="wrap">
+          <SectionHeading id="education-title" title="Education & languages" eyebrow="Basecamp" />
+          <Education />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="interests-title">
+        <div class="wrap">
+          <SectionHeading
+            id="interests-title"
+            title="Beyond the desk"
+            eyebrow="Off the clock"
+            lead={profile.personalNote}
+          />
+          <Interests />
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Base>
+
+<style>
+  .about .prose p {
+    font-size: var(--step-0);
+  }
+
+  .parallel {
+    margin-block-start: var(--space-l);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--border);
+  }
+
+  .parallel .roles {
+    margin-block-start: var(--space-2xs);
+  }
+
+  @media print {
+    .parallel {
+      margin-block-start: 8pt;
+      padding-block-start: 6pt;
+    }
+  }
+</style>

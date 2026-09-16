@@ -1,0 +1,133 @@
+---
+import { certifications } from '../lib/cv';
+---
+
+<div class="layout">
+  <div class="groups">
+    {
+      certifications.groups.map((group) => (
+        <section class="group">
+          <h3 class="eyebrow">{group.label}</h3>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <span class="mark" aria-hidden="true" />
+                {item.name}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="courses card">
+    <h3>Courses & training</h3>
+    <ul>
+      {certifications.courses.map((course) => <li>{course}</li>)}
+    </ul>
+  </section>
+</div>
+
+<style>
+  .layout {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 58rem) {
+    .layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+  }
+
+  .groups {
+    display: grid;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  .group ul {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .group li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-2xs);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  /* A summit marker: a small cairn-like triangle. */
+  .mark {
+    margin-block-start: 0.42em;
+    width: 0;
+    height: 0;
+    border-inline: 5px solid transparent;
+    border-block-end: 8px solid var(--accent);
+  }
+
+  .courses {
+    padding: var(--space-s);
+    align-content: start;
+  }
+
+  .courses h3 {
+    font-size: var(--step-0);
+  }
+
+  .courses ul {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .courses li {
+    position: relative;
+    padding-inline-start: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .courses li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.68em;
+    width: 7px;
+    height: 1.5px;
+    background: var(--border-strong);
+  }
+
+  @media print {
+    .layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 12pt;
+    }
+
+    .groups {
+      gap: 6pt;
+    }
+
+    .group ul {
+      gap: 1.5pt;
+    }
+
+    .courses {
+      padding: 5pt;
+    }
+
+    .courses ul {
+      gap: 1.5pt;
+    }
+
+    .mark {
+      border-block-end-color: #333 !important;
+    }
+  }
+</style>

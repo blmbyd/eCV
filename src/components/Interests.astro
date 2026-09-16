@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { interests } from '../lib/cv';
+---
+
+<ul class="cards">
+  {
+    interests.map((interest) => (
+      <li class="card">
+        <span class="icon" aria-hidden="true">
+          <Icon name={interest.icon} size={22} />
+        </span>
+        <h3>{interest.title}</h3>
+        <p>{interest.body}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-s);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .card {
+    padding: var(--space-s);
+    display: grid;
+    gap: var(--space-3xs);
+    align-content: start;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-block-end: var(--space-3xs);
+    border-radius: var(--radius-s);
+    background: var(--accent-wash);
+    color: var(--accent);
+  }
+
+  h3 {
+    font-size: var(--step-0);
+  }
+
+  p {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media print {
+    .cards {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5pt;
+    }
+
+    .card {
+      padding: 5pt;
+    }
+
+    .icon {
+      display: none;
+    }
+  }
+</style>

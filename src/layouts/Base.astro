@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+import '../styles/print.css';
+import TopoBackground from '../components/TopoBackground.astro';
+import { profile, siteMeta, featuredRoles, education, languages } from '../lib/cv';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noIndex?: boolean;
+  bare?: boolean;
+}
+
+const {
+  title = siteMeta.title,
+  description = siteMeta.description,
+  noIndex = false,
+  bare = false,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}/og.png`, Astro.site).href;
+const currentRole = featuredRoles[0]!;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  givenName: profile.shortName,
+  jobTitle: profile.headline,
+  description: profile.tagline,
+  email: `mailto:${profile.email}`,
+  url: canonical,
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: profile.location.city,
+    addressRegion: profile.location.region,
+    addressCountry: profile.location.countryCode,
+  },
+  sameAs: profile.links.map((link) => link.url),
+  worksFor: { '@type': 'Organization', name: currentRole.org },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: education[0]!.institution,
+  },
+  knowsLanguage: languages.map((language) => language.name),
+  knowsAbout: [
+    'GitHub Enterprise',
+    'DevOps',
+    'Platform Engineering',
+    'Developer Experience',
+    'Solution Architecture',
+    'Technical Pre-Sales',
+    'CI/CD',
+    'Microsoft Azure',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#0b1310" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f5ee" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+    {
+      !bare && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
+
+    {/* Applied before first paint so the theme never flashes. */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        try {
+          var forced = new URLSearchParams(location.search).get('theme');
+          if (forced === 'light' || forced === 'dark') {
+            root.dataset.theme = forced;
+            return;
+          }
+          var stored = localStorage.getItem('ecv-theme');
+          if (stored === 'light' || stored === 'dark') {
+            root.dataset.theme = stored;
+          }
+        } catch (error) {
+          /* Storage unavailable: fall back to the default theme. */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    {!bare && <TopoBackground />}
+    <slot />
+  </body>
+</html>

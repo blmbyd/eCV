@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /eCV/og
+
+Sitemap: https://blmbyd.github.io/eCV/sitemap-index.xml

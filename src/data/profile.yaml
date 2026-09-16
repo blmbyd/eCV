@@ -1,0 +1,77 @@
+# Core identity, contact and narrative.
+# Everything the hero, about section and structured data are built from.
+
+name: Paweł Stuczyński
+shortName: Paweł
+initials: PS
+
+headline: Principal DevOps Engineer & GitHub Solutions Architect
+
+roles:
+  - Principal DevOps Engineer
+  - GitHub Solutions Architect
+  - Technical Pre-Sales
+  - DevEx Advisor
+  - Public Speaker
+
+tagline: >-
+  I help enterprise engineering organisations ship software faster, safer and with
+  far less friction — through GitHub, DevOps and AI-assisted development.
+
+# Public page: city only, no street address, no phone, no date of birth.
+location:
+  city: Bydgoszcz
+  region: Kujawsko-pomorskie
+  country: Poland
+  countryCode: PL
+
+email: pawel@stuczynski.eu
+
+availability: Open to conversations about GitHub, DevOps and developer experience
+
+# Drop a square image into public/ and put its file name here, e.g. "portrait.jpg".
+# Left empty, the hero falls back to a monogram.
+portrait: null
+
+# Used to compute "years in engineering" so the page never goes stale.
+careerStart: 2008-02
+independentSince: 2012-01
+
+links:
+  - label: LinkedIn
+    handle: linkedin.com/in/pawelstuczynski
+    url: https://www.linkedin.com/in/pawelstuczynski/
+    icon: linkedin
+  - label: GitHub
+    handle: github.com/blmbyd
+    url: https://github.com/blmbyd
+    icon: github
+  - label: CodeSolutions.Pro
+    handle: codesolutions.pro
+    url: https://www.codesolutions.pro
+    icon: globe
+
+summary:
+  - >-
+    I help enterprise organisations modernise software delivery, improve developer
+    experience and accelerate engineering outcomes through GitHub, AI-assisted
+    development and DevOps transformation.
+  - >-
+    My work sits where technology, business and customer success overlap: technical
+    leadership, solution architecture and consultative pre-sales, guiding organisations
+    from discovery and technical strategy through implementation, adoption and
+    measurable outcomes.
+  - >-
+    Most of my time goes to engineering leaders, architects and platform teams —
+    understanding what actually slows them down, designing practical transformation
+    roadmaps, and showing how a modern developer platform improves collaboration,
+    automation, governance and throughput.
+  - >-
+    Outside customer engagements I speak at conferences, webinars and community events
+    on DevOps, developer experience, AI-powered development and modern software
+    engineering.
+
+# A short, human line that sits under the "Beyond the desk" heading.
+personalNote: >-
+  I started out as a toolmaker before I ever wrote production code, and that habit of
+  taking things apart to understand them never really went away.

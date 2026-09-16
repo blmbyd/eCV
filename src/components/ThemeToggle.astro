@@ -1,0 +1,85 @@
+---
+import Icon from './Icon.astro';
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  data-theme-toggle
+  aria-label="Switch to day trail theme"
+>
+  <span class="icon icon-sun"><Icon name="sun" size={17} /></span>
+  <span class="icon icon-moon"><Icon name="moon" size={17} /></span>
+  <span class="label" data-theme-label>Night</span>
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const label = document.querySelector<HTMLElement>('[data-theme-label]');
+
+  function paint(theme: string) {
+    document.documentElement.dataset.theme = theme;
+    if (label) label.textContent = theme === 'dark' ? 'Night' : 'Day';
+    button?.setAttribute(
+      'aria-label',
+      theme === 'dark' ? 'Switch to day trail theme' : 'Switch to night forest theme',
+    );
+  }
+
+  paint(document.documentElement.dataset.theme ?? 'dark');
+
+  button?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    try {
+      localStorage.setItem('ecv-theme', next);
+    } catch {
+      /* Private browsing: the choice just will not persist. */
+    }
+    paint(next);
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    padding: 0.42em 0.85em;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--bg-raised);
+    color: var(--text-muted);
+    font: inherit;
+    font-size: var(--step--1);
+    cursor: pointer;
+    transition: border-color 150ms var(--ease), color 150ms var(--ease);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+  }
+
+  :global([data-theme='dark']) .icon-sun,
+  :global([data-theme='light']) .icon-moon {
+    display: none;
+  }
+
+  @media print {
+    .theme-toggle {
+      display: none;
+    }
+  }
+</style>

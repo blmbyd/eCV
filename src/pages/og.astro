@@ -1,0 +1,126 @@
+---
+/**
+ * Open Graph card, rendered at exactly 1200x630 and screenshotted during the
+ * build by scripts/generate-pdf.mjs. Not linked from anywhere and noindexed.
+ */
+import Base from '../layouts/Base.astro';
+import TopoBackground from '../components/TopoBackground.astro';
+import { profile, skills, stats } from '../lib/cv';
+---
+
+<Base title={`${profile.name} — Open Graph card`} noIndex bare>
+  <div class="card" data-og-card>
+    <TopoBackground />
+    <div class="inner">
+      <p class="eyebrow">Curriculum vitae</p>
+      <h1>{profile.name}</h1>
+      <p class="headline">{profile.headline}</p>
+      <p class="tagline">{profile.tagline}</p>
+
+      <div class="foot">
+        <ul class="chip-list">
+          {skills.top.map((skill) => <li class="chip">{skill}</li>)}
+        </ul>
+        <p class="years">
+          <strong>{stats[0]!.value}</strong> years in engineering
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  :global(body) {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .card {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background:
+      radial-gradient(90% 120% at 12% -10%, rgba(143, 203, 122, 0.22), transparent 58%),
+      #0b1310;
+    color: #e8efe9;
+  }
+
+  .inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #8fcb7a;
+  }
+
+  h1 {
+    margin-block-start: 14px;
+    font-family: var(--font-display);
+    font-size: 88px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .headline {
+    margin-block-start: 18px;
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 500;
+    color: #8fcb7a;
+  }
+
+  .tagline {
+    margin-block-start: 20px;
+    max-width: 44ch;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #a3b6a9;
+  }
+
+  .foot {
+    margin-block-start: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding-block-start: 28px;
+    border-block-start: 1px solid #1e3227;
+  }
+
+  .chip-list {
+    gap: 10px;
+  }
+
+  .chip {
+    padding: 6px 16px;
+    font-size: 18px;
+    background: rgba(143, 203, 122, 0.1);
+    border-color: #2f5040;
+    color: #cddec4;
+  }
+
+  .years {
+    flex: none;
+    font-size: 20px;
+    color: #a3b6a9;
+  }
+
+  .years strong {
+    font-family: var(--font-display);
+    font-size: 34px;
+    color: #e3a455;
+  }
+</style>

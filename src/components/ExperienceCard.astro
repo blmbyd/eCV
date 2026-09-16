@@ -1,0 +1,272 @@
+---
+import { formatRange, formatDuration } from '../lib/cv';
+import type { Role } from '../lib/schema';
+
+interface Props {
+  role: Role;
+}
+
+const { role } = Astro.props;
+const isCurrent = role.end === null;
+---
+
+<article class="role" id={`role-${role.id}`}>
+  <div class="when">
+    <p class="range mono">{formatRange(role.start, role.end)}</p>
+    <p class="duration mono">{formatDuration(role.start, role.end)}</p>
+    {isCurrent && <p class="now">Current</p>}
+  </div>
+
+  <div class="what">
+    <h3>{role.title}</h3>
+    <p class="org">
+      {
+        role.orgUrl ? (
+          <a href={role.orgUrl} rel="noopener">
+            {role.org}
+          </a>
+        ) : (
+          role.org
+        )
+      }
+      <span class="dot" aria-hidden="true">·</span>
+      <span class="place">{role.location}</span>
+    </p>
+
+    {role.summary && <p class="summary">{role.summary}</p>}
+
+    {
+      role.groups?.map((group) => (
+        <section class="group">
+          <h4>{group.label}</h4>
+          <ul>
+            {group.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    {
+      role.tech && (
+        <dl class="tech">
+          {role.tech.map((group) => (
+            <div>
+              <dt>{group.label}</dt>
+              <dd>
+                <ul class="chip-list">
+                  {group.items.map((item) => (
+                    <li class="chip">{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .role {
+    display: grid;
+    gap: var(--space-2xs) var(--space-m);
+    padding-block: var(--space-m);
+    border-block-start: 1px solid var(--border);
+    scroll-margin-block-start: var(--space-m);
+    transition: background-color 200ms var(--ease);
+  }
+
+  .role:first-of-type {
+    border-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  .role.is-linked {
+    background: var(--accent-wash);
+    box-shadow: -1rem 0 0 var(--accent-wash), 1rem 0 0 var(--accent-wash);
+  }
+
+  @media (min-width: 52rem) {
+    .role {
+      grid-template-columns: 11rem minmax(0, 1fr);
+    }
+  }
+
+  .when {
+    display: grid;
+    gap: 2px;
+    align-content: start;
+  }
+
+  .range {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .duration {
+    color: var(--text-subtle);
+    font-size: var(--step--2);
+  }
+
+  .now {
+    margin-block-start: var(--space-3xs);
+    justify-self: start;
+    padding: 0.1em 0.6em;
+    border-radius: var(--radius-pill);
+    background: var(--amber-wash);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: var(--step-1);
+  }
+
+  .org {
+    margin-block-start: 2px;
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+
+  .org a {
+    color: inherit;
+  }
+
+  .dot {
+    margin-inline: 0.35em;
+    color: var(--text-subtle);
+  }
+
+  .place {
+    color: var(--text-subtle);
+  }
+
+  .summary {
+    margin-block-start: var(--space-2xs);
+    max-width: var(--measure);
+    color: var(--text-muted);
+  }
+
+  .group {
+    margin-block-start: var(--space-s);
+  }
+
+  .group h4 {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .group ul {
+    margin-block-start: var(--space-3xs);
+    display: grid;
+    gap: var(--space-3xs);
+    max-width: var(--measure);
+  }
+
+  .group li {
+    position: relative;
+    padding-inline-start: var(--space-s);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .group li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.68em;
+    width: 7px;
+    height: 1.5px;
+    background: var(--border-strong);
+  }
+
+  .tech {
+    margin-block-start: var(--space-s);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .tech > div {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  @media (min-width: 40rem) {
+    .tech > div {
+      grid-template-columns: 7rem minmax(0, 1fr);
+      align-items: baseline;
+      gap: var(--space-2xs);
+    }
+  }
+
+  .tech dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  @media print {
+    .role {
+      /* Long roles may span a page break; their sub-blocks stay intact. */
+      break-inside: auto;
+      padding-block: 5pt;
+      gap: 1pt 9pt;
+      grid-template-columns: 74pt minmax(0, 1fr);
+      background: none !important;
+      box-shadow: none !important;
+    }
+
+    .when,
+    .tech {
+      break-inside: avoid;
+    }
+
+    .group {
+      /* Bullet lists may flow across a page; the heading stays with them. */
+      break-inside: auto;
+    }
+
+    h3,
+    h4 {
+      break-after: avoid;
+    }
+
+    .now {
+      display: none;
+    }
+
+    .summary {
+      margin-block-start: 1pt;
+    }
+
+    .group {
+      margin-block-start: 3pt;
+    }
+
+    .group li {
+      line-height: 1.35;
+    }
+
+    .tech {
+      margin-block-start: 3pt;
+      gap: 1pt;
+    }
+
+    .tech > div {
+      grid-template-columns: 52pt minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+import { education, languages, formatRange } from '../lib/cv';
+---
+
+<div class="layout">
+  <div class="schools">
+    {
+      education.map((entry) => (
+        <article class="school">
+          <p class="range mono">{formatRange(entry.start, entry.end)}</p>
+          <div>
+            <h3>{entry.qualification}</h3>
+            <p class="field">
+              {entry.field}
+              {entry.specialisation && (
+                <>
+                  <span class="dot" aria-hidden="true">
+                    ·
+                  </span>
+                  {entry.specialisation}
+                </>
+              )}
+            </p>
+            <p class="place">
+              {entry.institution}
+              {entry.institutionNote && <span class="note"> ({entry.institutionNote})</span>}
+              <span class="dot" aria-hidden="true">
+                ·
+              </span>
+              {entry.location}
+            </p>
+            {entry.subjects.length > 0 && (
+              <ul class="subjects">
+                {entry.subjects.map((subject) => (
+                  <li>{subject}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <section class="languages card">
+    <h3>Languages</h3>
+    <dl>
+      {
+        languages.map((language) => (
+          <div>
+            <dt>{language.name}</dt>
+            <dd>
+              {language.level}
+              {language.cefr && <span class="cefr">{language.cefr}</span>}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+</div>
+
+<style>
+  .layout {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 58rem) {
+    .layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+  }
+
+  .school {
+    display: grid;
+    gap: var(--space-2xs) var(--space-m);
+  }
+
+  @media (min-width: 40rem) {
+    .school {
+      grid-template-columns: 11rem minmax(0, 1fr);
+    }
+  }
+
+  .range {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  h3 {
+    font-size: var(--step-1);
+  }
+
+  .field {
+    color: var(--accent);
+    font-size: var(--step--1);
+  }
+
+  .place {
+    margin-block-start: 2px;
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+
+  .note {
+    color: var(--text-subtle);
+  }
+
+  .dot {
+    margin-inline: 0.35em;
+    color: var(--text-subtle);
+  }
+
+  .subjects {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .subjects li {
+    position: relative;
+    padding-inline-start: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .subjects li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.68em;
+    width: 7px;
+    height: 1.5px;
+    background: var(--border-strong);
+  }
+
+  .languages {
+    padding: var(--space-s);
+    align-content: start;
+  }
+
+  .languages h3 {
+    font-size: var(--step-0);
+  }
+
+  .languages dl {
+    margin-block-start: var(--space-2xs);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .languages dt {
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+
+  .languages dd {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .cefr {
+    padding: 0.05em 0.5em;
+    border-radius: var(--radius-pill);
+    background: var(--amber-wash);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+  }
+
+  @media print {
+    .layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 12pt;
+    }
+
+    .school {
+      grid-template-columns: 74pt minmax(0, 1fr);
+      gap: 1pt 9pt;
+    }
+
+    .languages {
+      padding: 5pt;
+    }
+  }
+</style>

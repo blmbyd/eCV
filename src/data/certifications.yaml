@@ -1,0 +1,27 @@
+# Certifications grouped by issuer, plus the shorter courses.
+
+groups:
+  - label: GitHub
+    items:
+      - name: GitHub Administration
+      - name: GitHub Advanced Security
+      - name: GitHub Copilot
+      - name: GitHub Foundations
+
+  - label: Microsoft
+    items:
+      - name: AZ-400 — Designing and Implementing Microsoft DevOps Solutions
+      - name: MCTS — SQL Server 2008, Database Development
+      - name: Microsoft Certified Professional
+
+  - label: Beyond the keyboard
+    items:
+      - name: The Art of Public Speaking
+      - name: PADI Open Water Diver
+
+courses:
+  - MS-6231 — Maintaining a Microsoft SQL Server 2008 Database
+  - MS-6232 — Implementing a Microsoft SQL Server 2008 Database
+  - General Data Protection Regulation (GDPR)
+  - PCI DSS Introduction (Essentials)
+  - Security Awareness Essentials Challenge
