@@ -41,7 +41,6 @@ export const profileSchema = z.object({
     country: z.string(),
     countryCode: z.string().length(2),
   }),
-  email: z.string().email(),
   availability: z.string(),
   careerStart: yearMonth,
   independentSince: yearMonth,
