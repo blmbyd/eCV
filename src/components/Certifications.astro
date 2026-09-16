@@ -1,18 +1,33 @@
 ---
-import { certifications } from '../lib/cv';
+import { certifications, certificationGroups, formatYear } from '../lib/cv';
 ---
 
 <div class="layout">
   <div class="groups">
     {
-      certifications.groups.map((group) => (
+      certificationGroups.map((group) => (
         <section class="group">
           <h3 class="eyebrow">{group.label}</h3>
+          {group.note && <p class="note">{group.note}</p>}
           <ul>
             {group.items.map((item) => (
-              <li>
+              <li class:list={['item', { expired: item.expired }]}>
                 <span class="mark" aria-hidden="true" />
-                {item.name}
+                <span class="text">
+                  {item.url ? (
+                    <a href={item.url} rel="noopener">
+                      {item.name}
+                    </a>
+                  ) : (
+                    item.name
+                  )}
+                  {item.issued && (
+                    <span class="meta mono">
+                      {formatYear(item.issued)}
+                      {item.expired && <span class="flag">expired</span>}
+                    </span>
+                  )}
+                </span>
               </li>
             ))}
           </ul>
@@ -26,6 +41,7 @@ import { certifications } from '../lib/cv';
     <ul>
       {certifications.courses.map((course) => <li>{course}</li>)}
     </ul>
+    <p class="verify">Linked credentials are verifiable on Credly.</p>
   </section>
 </div>
 
@@ -37,15 +53,35 @@ import { certifications } from '../lib/cv';
 
   @media (min-width: 58rem) {
     .layout {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
       gap: var(--space-xl);
     }
   }
 
   .groups {
-    display: grid;
-    gap: var(--space-m);
     align-content: start;
+  }
+
+  @media (min-width: 42rem) {
+    .groups {
+      /* Columns rather than a grid, so uneven groups pack without dead space. */
+      columns: 2;
+      column-gap: var(--space-l);
+    }
+  }
+
+  .group {
+    break-inside: avoid;
+  }
+
+  .group + .group {
+    margin-block-start: var(--space-m);
+  }
+
+  .note {
+    margin-block-start: 2px;
+    font-size: var(--step--2);
+    color: var(--text-subtle);
   }
 
   .group ul {
@@ -54,7 +90,7 @@ import { certifications } from '../lib/cv';
     gap: var(--space-2xs);
   }
 
-  .group li {
+  .item {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     align-items: start;
@@ -72,9 +108,40 @@ import { certifications } from '../lib/cv';
     border-block-end: 8px solid var(--accent);
   }
 
+  .item.expired .mark {
+    border-block-end-color: var(--text-subtle);
+  }
+
+  .text a {
+    color: inherit;
+    text-decoration: none;
+    border-block-end: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .text a:hover {
+    color: var(--accent);
+  }
+
+  .meta {
+    margin-inline-start: 0.5em;
+    font-size: var(--step--2);
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+
+  .flag {
+    margin-inline-start: 0.4em;
+    padding: 0.05em 0.45em;
+    border-radius: var(--radius-pill);
+    background: var(--amber-wash);
+    color: var(--amber);
+    font-size: var(--step--2);
+  }
+
   .courses {
     padding: var(--space-s);
     align-content: start;
+    align-self: start;
   }
 
   .courses h3 {
@@ -104,14 +171,31 @@ import { certifications } from '../lib/cv';
     background: var(--border-strong);
   }
 
+  .verify {
+    margin-block-start: var(--space-s);
+    padding-block-start: var(--space-2xs);
+    border-block-start: 1px solid var(--border);
+    font-size: var(--step--2);
+    color: var(--text-subtle);
+  }
+
   @media print {
     .layout {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
       gap: 12pt;
     }
 
     .groups {
-      gap: 6pt;
+      columns: 2;
+      column-gap: 12pt;
+    }
+
+    .group {
+      break-inside: avoid;
+    }
+
+    .group + .group {
+      margin-block-start: 7pt;
     }
 
     .group ul {
@@ -128,6 +212,15 @@ import { certifications } from '../lib/cv';
 
     .mark {
       border-block-end-color: #333 !important;
+    }
+
+    .flag {
+      background: none;
+      border: 0.5pt solid var(--amber);
+    }
+
+    .verify {
+      margin-block-start: 5pt;
     }
   }
 </style>
