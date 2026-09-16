@@ -121,12 +121,25 @@ contributions:
       Hands-on exercises for learning GitHub Copilot, used in multiple community
       workshops.
 
+  # Deliberately unlinked: the Partners Community is private, so its URL must not
+  # be published here. Do not add one.
   - id: partners-community-forum
     type: community
     date: null
     title: GitHub Partners Community forum
     venue: GitHub Partners Community
-    url: https://github.com/githubpartners-community/community/discussions?discussions_q=is%3Aopen+author%3Ablmbyd
+    url: null
     summary: >-
       Ongoing participation in discussions, answering questions and sharing practice with
       other partners.
+
+  # Internal SoftwareOne community, so there is no public link to give.
+  - id: softwareone-cloud-community
+    type: community
+    date: null
+    title: Cloud Community Champion
+    venue: SoftwareOne, internal
+    url: null
+    summary: >-
+      Active Champion in SoftwareOne's internal Cloud Community, helping colleagues across
+      the organisation share practice and stay current.

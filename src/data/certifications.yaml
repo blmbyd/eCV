@@ -1,18 +1,65 @@
 # Certifications grouped by issuer, plus the shorter courses.
+#
+# `badge` is a Credly badge id; the renderer turns it into a verification link.
+# `issued` and `expires` are optional. An entry whose `expires` date has passed
+# renders with an explicit expired marker rather than being quietly dropped, so
+# the list stays honest.
 
 groups:
-  - label: GitHub
+  - label: GitHub certifications
     items:
-      - name: GitHub Administration
-      - name: GitHub Advanced Security
-      - name: GitHub Copilot
       - name: GitHub Foundations
+        issued: 2025-03-14
+        expires: 2028-03-14
+        badge: 1dc9b936-f34b-4838-b180-792965713e74
+      - name: GitHub Copilot
+        issued: 2024-10-19
+        expires: 2027-10-19
+        badge: bad2a96e-6d50-4df1-8ea5-f8670ab8a85c
+      - name: GitHub Advanced Security
+        issued: 2024-03-26
+        expires: 2027-03-26
+        badge: cc4aa2a1-f887-4c14-a596-17306e526fcf
+      - name: GitHub Administration
+        issued: 2023-03-16
+        expires: 2026-03-17
+        badge: 67a889f7-b8ca-4c06-9a59-da3f4afb970b
+
+  - label: GitHub partner credentials
+    note: Accredited to deliver these engagements as a partner
+    items:
+      - name: GitHub Revenue Motions Sales Credential
+        issued: 2026-06-23
+        badge: b6de09e8-ab53-4d51-b517-dfe9bcfdd4dc
+      - name: 'GitHub Copilot: Deploying and Scaling AI in the Enterprise Delivery Credential'
+        issued: 2026-06-19
+        expires: 2027-06-19
+        badge: f9561aeb-596d-4c4f-be8b-bf1c9ee5913e
+      - name: 'GitHub Copilot: Core Skills & Application Delivery Credential'
+        issued: 2026-06-19
+        expires: 2027-06-19
+        badge: dc1ab7af-568b-40a5-8886-ffaebadd319b
+      - name: GitHub Advanced Security Delivery Credential
+        issued: 2026-06-15
+        expires: 2027-06-15
+        badge: e38f4d56-cb8c-4600-a9d7-cc5ea37f0713
+      - name: GitHub Migrations Delivery Credential
+        issued: 2026-06-12
+        expires: 2027-06-12
+        badge: 72bcc359-ac1d-448f-b7a2-8bd688224129
+      - name: Azure DevOps to GitHub Migrations Delivery Credential
+        issued: 2026-06-12
+        expires: 2027-06-12
+        badge: d1c4de1d-c8cd-4771-a1e2-52a88db152b7
 
   - label: Microsoft
     items:
       - name: AZ-400 — Designing and Implementing Microsoft DevOps Solutions
       - name: MCTS — SQL Server 2008, Database Development
       - name: Microsoft Certified Professional
+      - name: GitHub & GitHub Copilot Technical Workshop (FY25)
+        issued: 2024-11-21
+        badge: d12a15ad-fbd4-4337-b79c-5c8a61b255fc
 
   - label: Beyond the keyboard
     items:

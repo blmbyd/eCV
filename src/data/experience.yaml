@@ -48,7 +48,8 @@ roles:
         items:
           - Lead cross-functional delivery teams through strategic customer engagements.
           - Speak at industry conferences, webinars, workshops and community events.
-          - Internal GitHub Champion and contributor to enablement initiatives.
+          - Internal GitHub Champion and Cloud Community Champion, contributing to
+            enablement initiatives.
     tech:
       - label: Platform
         items:

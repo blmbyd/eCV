@@ -106,14 +106,37 @@ export const earlierRoles = roles
 /** Every role in one newest-first list, used for structured data. */
 export const allRoles = [...roles].sort(byStartDescending);
 
-const certificationCount = certifications.groups.reduce(
-  (total, group) => total + group.items.length,
-  0,
-);
-
 const organisationCount = new Set(
   roles.filter((role) => role.featured).map((role) => role.orgShort),
 ).size;
+
+/* -------------------------------------------------------------------------- */
+/*  Certifications                                                             */
+/* -------------------------------------------------------------------------- */
+
+const todayKey = buildDate.toISOString().slice(0, 10);
+
+export function formatYear(date: string): string {
+  return date.slice(0, 4);
+}
+
+/**
+ * Groups decorated with a verification link and an expiry state, so an expired
+ * credential is shown as expired rather than silently listed as current.
+ */
+export const certificationGroups = certifications.groups.map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({
+    ...item,
+    url: item.badge ? `https://www.credly.com/badges/${item.badge}` : null,
+    expired: item.expires ? item.expires < todayKey : false,
+  })),
+}));
+
+const activeCertificationCount = certificationGroups.reduce(
+  (total, group) => total + group.items.filter((item) => !item.expired).length,
+  0,
+);
 
 /* -------------------------------------------------------------------------- */
 /*  Speaking and community                                                     */
@@ -172,8 +195,8 @@ export const stats = [
     label: 'organisations, from game studios to enterprise energy',
   },
   {
-    value: certificationCount,
-    label: 'professional certifications',
+    value: activeCertificationCount,
+    label: 'current professional certifications',
   },
   {
     value: recentContributionCount,

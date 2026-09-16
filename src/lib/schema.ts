@@ -96,7 +96,18 @@ export const certificationsSchema = z.object({
     .array(
       z.object({
         label: z.string(),
-        items: z.array(z.object({ name: z.string() })).min(1),
+        note: z.string().optional(),
+        items: z
+          .array(
+            z.object({
+              name: z.string(),
+              issued: isoDate.optional(),
+              expires: isoDate.optional(),
+              /** Credly badge id, turned into a verification link. */
+              badge: z.string().optional(),
+            }),
+          )
+          .min(1),
       }),
     )
     .min(1),
