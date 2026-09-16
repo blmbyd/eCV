@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "pdf": "node scripts/generate-pdf.mjs",
-    "build:full": "astro build && node scripts/generate-pdf.mjs",
+    "verify:pdf": "node scripts/check-pdf.mjs",
+    "build:full": "astro build && node scripts/generate-pdf.mjs && node scripts/check-pdf.mjs",
     "check": "astro check"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@rollup/plugin-yaml": "^4.1.2",
+    "pdfjs-dist": "^6.3.289",
     "playwright": "^1.50.0",
     "typescript": "^5.7.0"
   }

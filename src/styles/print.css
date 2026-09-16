@@ -8,9 +8,10 @@
 
 @page {
   size: A4;
-  /* Browser printing only. The PDF generator neutralises this and supplies its
-     own margins, so the two do not compound. */
-  margin: 14mm 13mm 13mm;
+  /* Chromium honours this in preference to the `margin` option passed to
+     page.pdf(), so this rule governs both browser printing and the generated
+     PDF. The larger bottom margin leaves room for the page-number footer. */
+  margin: 14mm 13mm 16mm;
 }
 
 @media print {

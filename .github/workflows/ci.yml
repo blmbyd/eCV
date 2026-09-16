@@ -38,6 +38,9 @@ jobs:
       - name: Render cv.pdf and the Open Graph image
         run: npm run pdf
 
+      - name: Check the PDF margins
+        run: npm run verify:pdf
+
       - name: Upload the preview build
         uses: actions/upload-artifact@v4
         with:

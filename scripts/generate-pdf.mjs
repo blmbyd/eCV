@@ -103,16 +103,14 @@ async function main() {
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: 'print' });
 
-    // The stylesheet sets @page margins for browser printing. Chromium adds the
-    // margins below on top of those, so zero the CSS ones to avoid compounding.
-    await page.addStyleTag({ content: '@page { margin: 0; }' });
-
     await page.pdf({
       path: path.join(DIST, 'cv.pdf'),
       format: 'A4',
       printBackground: true,
+      // Page margins come from the @page rule in src/styles/print.css, which
+      // Chromium honours in preference to the `margin` option below. Change the
+      // margins there, not here.
       preferCSSPageSize: false,
-      margin: { top: '13mm', right: '13mm', bottom: '14mm', left: '13mm' },
       displayHeaderFooter: true,
       headerTemplate: '<span></span>',
       footerTemplate: `

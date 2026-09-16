@@ -41,7 +41,8 @@ npm run dev          # http://localhost:4321/eCV
 | `npm run dev` | Dev server with hot reload, including on YAML edits |
 | `npm run build` | Static build into `dist/` |
 | `npm run pdf` | Renders `dist/cv.pdf` and `dist/og.png` from the build |
-| `npm run build:full` | `build` followed by `pdf` |
+| `npm run verify:pdf` | Checks the generated PDF actually has margins |
+| `npm run build:full` | `build`, then `pdf`, then `verify:pdf` |
 | `npm run check` | Astro and TypeScript diagnostics |
 
 `npm run pdf` needs Chromium once: `npx playwright install chromium`.
@@ -83,6 +84,12 @@ Two independent paths, both rendered from the same source:
    the base path resolves exactly as it does on Pages, drives Chromium in print emulation
    at `/?theme=light`, and writes the file with page numbers in the footer. The same
    script screenshots `/og` into `og.png` for social previews.
+
+> **Page margins live in one place: the `@page` rule in `src/styles/print.css`.**
+> Chromium honours that rule in preference to the `margin` option passed to `page.pdf()`,
+> so overriding it at print time silently produces a PDF with content running to the
+> paper edge. `npm run verify:pdf` measures the real text bounds in the generated file
+> and fails if any page loses its margins; CI runs it on every build.
 
 ## Theming
 
