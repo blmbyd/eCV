@@ -34,7 +34,6 @@ roles:
               roadmaps.
           - Support customers all the way through evaluation, implementation and
             adoption — not just to signature.
-          - Lead cross-functional delivery teams through strategic customer engagements.
       - label: Migrations to GitHub
         items:
           - Lead enterprise migrations onto GitHub end to end, from assessment and
@@ -57,14 +56,16 @@ roles:
             environments.
           - text: Guide modernisation programmes spanning platform engineering, DevOps
               and AI engineering practices.
-      # Duplicated in detail by the Speaking & community section, so the whole group
-      # stays on the page but is left out of the printed CV.
+      # The technical lead line prints. The speaking and champion lines stay on the
+      # page only, since the Speaking & community section covers both in detail.
       - label: Leadership & community
-        screenOnly: true
         items:
-          - Speak at industry conferences, webinars, workshops and community events.
-          - Internal GitHub Champion and Cloud Community Champion, contributing to
-            enablement initiatives.
+          - Technical lead for the small project teams formed around individual customer
+            engagements.
+          - text: Speak at industry conferences, webinars, workshops and community
+              events.
+          - text: Internal GitHub Champion and Cloud Community Champion, contributing to
+              enablement initiatives.
 
   - id: self-employed
     title: Developer / DevOps
