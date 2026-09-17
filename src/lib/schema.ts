@@ -80,6 +80,11 @@ export const roleSchema = z.object({
   orgUrl: z.string().url().optional(),
   /** Short label for the elevation profile, where horizontal room is tight. */
   chartLabel: z.string().optional(),
+  /**
+   * Marks a turning point in the career. Rendered on the elevation profile as a
+   * distinct annotation rather than as another company label.
+   */
+  milestone: z.string().optional(),
   start: yearMonth,
   end: yearMonth.nullable(),
   location: z.string(),

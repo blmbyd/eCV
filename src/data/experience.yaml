@@ -199,7 +199,7 @@ roles:
     title: DevOps Engineer
     org: SuperControl · SuperWebs Ltd
     orgShort: SuperControl
-    chartLabel: DevOps turn
+    milestone: DevOps from here
     start: 2018-11
     end: 2019-03
     location: Poland · Scotland

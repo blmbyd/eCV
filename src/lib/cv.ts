@@ -260,7 +260,9 @@ export interface Waypoint {
   labelX: number;
   labelY: number;
   labelAbove: boolean;
-  label: string;
+  /** Null when the waypoint carries a milestone annotation instead. */
+  label: string | null;
+  milestone: string | null;
   orgShort: string;
   title: string;
   range: string;
@@ -269,13 +271,26 @@ export interface Waypoint {
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
-/** Only featured roles get a marker; the rest still shape the ridge line. */
+/**
+ * Only featured roles get a marker; the rest still shape the ridge line. A role
+ * with a milestone gets the milestone annotation instead of a company label, so
+ * the turning point does not read as just another employer.
+ */
+let labelSlot = 0;
 export const waypoints: Waypoint[] = mainRolesAscending
   .filter((role) => role.featured)
-  .map((role, index) => {
+  .map((role) => {
     const x = roleMidpointX(role);
     const y = toY(role.scope);
-    const labelAbove = index % 2 === 0;
+    const milestone = role.milestone ?? null;
+    const label = milestone ? null : (role.chartLabel ?? role.orgShort);
+
+    let labelAbove = false;
+    if (label !== null) {
+      labelAbove = labelSlot % 2 === 0;
+      labelSlot += 1;
+    }
+
     return {
       id: role.id,
       x,
@@ -283,7 +298,8 @@ export const waypoints: Waypoint[] = mainRolesAscending
       labelX: clamp(x, 48, VIEW.width - 48),
       labelY: labelAbove ? y - 14 : y + 22,
       labelAbove,
-      label: role.chartLabel ?? role.orgShort,
+      label,
+      milestone,
       orgShort: role.orgShort,
       title: role.title,
       range: formatRange(role.start, role.end),

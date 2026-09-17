@@ -7,6 +7,8 @@
  *    paper edge, which is easy to miss because the page count improves.
  * 2. Screen-only copy. Anything marked `screenOnly` in the data must stay on the
  *    web page and out of the printed CV.
+ * 3. The link back to the live site, which a printed CV needs in order to be
+ *    useful on paper.
  */
 import { readFileSync } from 'node:fs';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
@@ -122,6 +124,28 @@ if (manifest?.screenOnly?.length) {
   console.log(
     `  ${manifest.screenOnly.length} screen-only block(s) correctly excluded from print.`,
   );
+}
+
+/* ------------------------------------------------------ link back to site -- */
+
+if (manifest?.expectedLink) {
+  const links = new Set();
+  for (let n = 1; n <= doc.numPages; n += 1) {
+    for (const annotation of await (await doc.getPage(n)).getAnnotations()) {
+      if (annotation.url) links.add(annotation.url);
+    }
+  }
+
+  const found = [...links].some((url) => url.startsWith(manifest.expectedLink));
+  if (!found) {
+    console.error(
+      `\nThe PDF does not link back to ${manifest.expectedLink}. ` +
+        'A printed CV should point at the live version.',
+    );
+    process.exit(1);
+  }
+
+  console.log(`  links back to ${manifest.expectedLink}`);
 }
 
 console.log(`\n${FILE}: ${doc.numPages} pages, margins OK.`);

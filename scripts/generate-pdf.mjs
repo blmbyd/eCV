@@ -110,7 +110,17 @@ async function main() {
     );
     await writeFile(
       path.join(ROOT, '.pdf-check.json'),
-      JSON.stringify({ screenOnly }, null, 2),
+      JSON.stringify(
+        {
+          screenOnly,
+          // The printed CV must link back to the live page.
+          expectedLink: astroConfig.site
+            ? new URL(`${BASE}/`, astroConfig.site).href
+            : null,
+        },
+        null,
+        2,
+      ),
     );
 
     await page.pdf({

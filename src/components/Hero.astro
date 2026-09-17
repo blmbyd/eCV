@@ -6,6 +6,11 @@ import { profile, skills } from '../lib/cv';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const locationLabel = `${profile.location.city}, ${profile.location.country}`;
+
+// Derived from the Astro config, so moving to a custom domain updates it too.
+// Only shown in print: the live page has no need to link to itself.
+const siteUrl = Astro.site ? new URL(`${base}/`, Astro.site).href : null;
+const siteLabel = siteUrl?.replace(/^https?:\/\//, '').replace(/\/$/, '');
 ---
 
 <header class="hero">
@@ -57,6 +62,14 @@ const locationLabel = `${profile.location.city}, ${profile.location.country}`;
                 </a>
               </li>
             ))
+          }
+          {
+            siteUrl && (
+              <li class="print-only">
+                <Icon name="globe" size={16} />
+                <a href={siteUrl}>{siteLabel}</a>
+              </li>
+            )
           }
         </ul>
 
@@ -200,6 +213,12 @@ const locationLabel = `${profile.location.city}, ${profile.location.country}`;
     color: var(--accent);
   }
 
+  /* The live page does not need to link to itself; the printed CV does.
+     Scoped under .contact to outrank the `.contact li { display: flex }` rule. */
+  .contact .print-only {
+    display: none;
+  }
+
   .actions {
     margin-block-start: var(--space-m);
     display: flex;
@@ -274,6 +293,10 @@ const locationLabel = `${profile.location.city}, ${profile.location.country}`;
   @media print {
     .hero {
       padding-block: 0 10pt;
+    }
+
+    .contact .print-only {
+      display: flex !important;
     }
 
     .bar,

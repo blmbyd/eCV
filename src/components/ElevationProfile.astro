@@ -60,32 +60,39 @@ const { view, viewBox, ridgeLine, ridgeArea, waypoints, yearTicks, parallel } = 
       waypoints.map((point) => (
         <a class="waypoint" href={`#role-${point.id}`} data-waypoint={point.id}>
           <title>{`${point.title} — ${point.orgShort}, ${point.range}`}</title>
-          <line
-            class="stem"
-            x1={point.x}
-            y1={point.y}
-            x2={point.x}
-            y2={view.height}
-          />
-          <circle class="halo" cx={point.x} cy={point.y} r="11" />
-          <circle class="dot" cx={point.x} cy={point.y} r="4.5" />
-          <text
-            class="label"
-            x={point.labelX}
-            y={point.labelY}
-            text-anchor="middle"
-            dominant-baseline={point.labelAbove ? 'auto' : 'hanging'}
-          >
-            {point.label}
-          </text>
+          {point.milestone ? (
+            <g class="milestone">
+              <line x1={point.x} y1="20" x2={point.x} y2={view.height} />
+              <circle cx={point.x} cy={point.y} r="5.5" />
+              <text x={point.labelX} y="13" text-anchor="middle">
+                {point.milestone}
+              </text>
+            </g>
+          ) : (
+            <>
+              <line class="stem" x1={point.x} y1={point.y} x2={point.x} y2={view.height} />
+              <circle class="halo" cx={point.x} cy={point.y} r="11" />
+              <circle class="dot" cx={point.x} cy={point.y} r="4.5" />
+              <text
+                class="label"
+                x={point.labelX}
+                y={point.labelY}
+                text-anchor="middle"
+                dominant-baseline={point.labelAbove ? 'auto' : 'hanging'}
+              >
+                {point.label}
+              </text>
+            </>
+          )}
         </a>
       ))
     }
   </svg>
 
   <figcaption>
-    Height is scope and seniority, not salary. The dotted lane is the independent
-    practice that has run alongside since 2012. Select a marker to jump to that role.
+    Height is scope and seniority, not salary. The amber marker is where the DevOps work
+    started; the dotted lane is the independent practice running alongside since 2012.
+    Select a marker to jump to that role.
   </figcaption>
 </figure>
 
@@ -226,6 +233,40 @@ const { view, viewBox, ridgeLine, ridgeArea, waypoints, yearTicks, parallel } = 
 
   .waypoint:focus-visible .dot {
     stroke: var(--amber);
+  }
+
+  /* A turning point in the career, deliberately unlike the company markers. */
+  .milestone line {
+    stroke: var(--amber);
+    stroke-width: 1.2;
+    stroke-dasharray: 4 4;
+    opacity: 0.75;
+  }
+
+  .milestone circle {
+    fill: var(--amber);
+    stroke: var(--bg);
+    stroke-width: 2;
+  }
+
+  .milestone text {
+    fill: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .waypoint:hover .milestone line,
+  .waypoint:focus-visible .milestone line,
+  .waypoint.is-active .milestone line {
+    opacity: 1;
+  }
+
+  .waypoint:hover .milestone circle,
+  .waypoint:focus-visible .milestone circle,
+  .waypoint.is-active .milestone circle {
+    r: 7;
   }
 
   @media print {
